@@ -109,11 +109,15 @@
   @media (prefers-reduced-motion:no-preference){
     .wg{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s ease forwards .3s;}
     @keyframes draw{to{stroke-dashoffset:0;}}
-    .flow{stroke-dashoffset:var(--dx-flow-period);animation:flow var(--dx-flow-speed) linear infinite;animation-delay:2.2s;}
-    @keyframes flow{from{stroke-dashoffset:var(--dx-flow-period);}to{stroke-dashoffset:0;}}
+    .flow{stroke-dashoffset:2016;animation:flow var(--dx-flow-speed) linear infinite;}
+    .flow.o1{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0);}
+    .flow.o2{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0.25);}
+    .flow.o3{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0.5);}
+    .flow.o4{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0.75);}
+    @keyframes flow{from{stroke-dashoffset:2016;}to{stroke-dashoffset:0;}}
   }
   .flow{fill:none;stroke:var(--dx-flow-color,#F6A860);stroke-width:var(--dx-flow-w,2.4);stroke-linecap:round;
-    stroke-dasharray:var(--dx-flow-pulse,16) calc(var(--dx-flow-period,256) - var(--dx-flow-pulse,16));
+    stroke-dasharray:var(--dx-flow-pulse,16) 2000;
     filter:drop-shadow(0 0 5px var(--dx-flow-color,#E8843C));pointer-events:none;}
   .circuit.no-flow .flow-layer{display:none;}
   .dx-open{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-size:.85rem;
@@ -269,6 +273,7 @@
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
       <a href="#education">Education</a>
     </div>
     <a class="nav-cta" href="#contact">Contact</a>
@@ -294,160 +299,6 @@
     </div>
 
     <!-- SIGNATURE: 1x4 CWDM MZI demux -->
-    <div class="circuit reveal">
-      <div class="circuit-cap">
-        <span class="eyebrow">1×4 CWDM demux · cascaded MZI · broadband directional couplers (bdc) · SOI</span>
-        <span class="lbl mono" style="color:var(--ink-faint)">λ = <span id="capWl1">1553</span> / <span id="capWl2">1555</span> / <span id="capWl3">1557</span> / <span id="capWl4">1559</span> nm</span>
-      </div>
-      <svg viewBox="0 0 1240 400" role="img" aria-label="1x4 CWDM demultiplexer: cascaded MZI with broadband directional couplers, 1550 nm laser.">
-        <g class="ruler">
-          <line class="tick" x1="30" y1="390" x2="1190" y2="390"/>
-          <line class="tick" x1="40" y1="384" x2="40" y2="396"/>
-          <line class="tick" x1="320" y1="384" x2="320" y2="396"/>
-          <line class="tick" x1="600" y1="384" x2="600" y2="396"/>
-          <line class="tick" x1="900" y1="384" x2="900" y2="396"/>
-          <line class="tick" x1="1180" y1="384" x2="1180" y2="396"/>
-        </g>
-        <g class="source">
-          <rect x="8" y="113" width="26" height="22" rx="3" fill="var(--raised-2)" stroke="var(--dx-accent)" stroke-width="1.4"/>
-          <line x1="22" y1="115" x2="17" y2="133" stroke="var(--dx-accent)" stroke-width="1" opacity=".7"/>
-          <line x1="34" y1="124" x2="40" y2="124" stroke="var(--dx-accent)" stroke-width="var(--dx-lw,1.6)" stroke-linecap="round"/>
-        </g>
-        <g class="wg-layer">
-          <path class="wg" d="M40,124 H120"/>
-          <path class="wg" d="M120,124 C145,124 150,182 160,182 H220 C230,182 235,124 260,124"/>
-          <path class="wg" d="M120,256 C145,256 150,198 160,198 H220 C230,198 235,256 260,256"/>
-          <path class="wg" d="M260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460"/>
-          <path class="wg" d="M260,256 H460"/>
-          <path class="wg" d="M460,124 C485,124 490,182 500,182 H560 C570,182 575,124 600,124"/>
-          <path class="wg" d="M460,256 C485,256 490,198 500,198 H560 C570,198 575,256 600,256"/>
-          <path class="wg" d="M600,124 H660"/>
-          <path class="wg" d="M600,256 H660"/>
-          <path class="wg" d="M660,124 C685,124 690,160 700,160 H760 C770,160 775,124 800,124"/>
-          <path class="wg" d="M660,212 C685,212 690,176 700,176 H760 C770,176 775,212 800,212"/>
-          <path class="wg" d="M800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000"/>
-          <path class="wg" d="M800,212 H1000"/>
-          <path class="wg" d="M1000,124 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124"/>
-          <path class="wg" d="M1000,212 C1025,212 1030,176 1040,176 H1100 C1110,176 1115,212 1140,212"/>
-          <path class="wg" d="M660,256 C685,256 690,292 700,292 H760 C770,292 775,256 800,256"/>
-          <path class="wg" d="M660,344 C685,344 690,308 700,308 H760 C770,308 775,344 800,344"/>
-          <path class="wg" d="M800,256 H1000"/>
-          <path class="wg" d="M800,344 H865 C880,344 888,364 900,364 C912,364 920,344 935,344 H1000"/>
-          <path class="wg" d="M1000,256 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256"/>
-          <path class="wg" d="M1000,344 C1025,344 1030,308 1040,308 H1100 C1110,308 1115,344 1140,344"/>
-          <path class="wg" d="M1140,124 H1190"/>
-          <path class="wg" d="M1140,212 H1190"/>
-          <path class="wg" d="M1140,256 H1190"/>
-          <path class="wg" d="M1140,344 H1190"/>
-        </g>
-        <g class="tapers">
-          <path fill="var(--ink-faint)" d="M120,251 L120,261 L98,256 Z"/>
-          <path fill="var(--ink-faint)" d="M660,207 L660,217 L638,212 Z"/>
-          <path fill="var(--ink-faint)" d="M660,339 L660,349 L638,344 Z"/>
-        </g>
-        <rect class="phase" x="815" y="246" width="80" height="20" rx="2" fill="none" stroke="var(--dx-accent)" stroke-width="1.2" stroke-dasharray="4 3" opacity=".85"/>
-        <g class="lc-bracket" stroke="var(--ink-faint)" stroke-width="1" fill="none">
-          <line x1="160" y1="216" x2="160" y2="224"/><line x1="220" y1="216" x2="220" y2="224"/><line x1="160" y1="220" x2="220" y2="220"/>
-        </g>
-        <g class="flow-layer">
-          <path class="flow" d="M40,124 H120"/>
-          <path class="flow" d="M120,124 C145,124 150,182 160,182 H220 C230,182 235,124 260,124"/>
-          <path class="flow" d="M190,198 H220 C230,198 235,256 260,256"/>
-          <path class="flow" d="M260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460"/>
-          <path class="flow" d="M260,256 H460"/>
-          <path class="flow" d="M460,124 C485,124 490,182 500,182 H560 C570,182 575,124 600,124"/>
-          <path class="flow" d="M460,256 C485,256 490,198 500,198 H560 C570,198 575,256 600,256"/>
-          <path class="flow" d="M600,124 H660"/>
-          <path class="flow" d="M600,256 H660"/>
-          <path class="flow" d="M660,124 C685,124 690,160 700,160 H760 C770,160 775,124 800,124"/>
-          <path class="flow" d="M730,176 H760 C770,176 775,212 800,212"/>
-          <path class="flow" d="M800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000"/>
-          <path class="flow" d="M800,212 H1000"/>
-          <path class="flow" d="M1000,124 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124"/>
-          <path class="flow" d="M1000,212 C1025,212 1030,176 1040,176 H1100 C1110,176 1115,212 1140,212"/>
-          <path class="flow" d="M660,256 C685,256 690,292 700,292 H760 C770,292 775,256 800,256"/>
-          <path class="flow" d="M730,308 H760 C770,308 775,344 800,344"/>
-          <path class="flow" d="M800,256 H1000"/>
-          <path class="flow" d="M800,344 H865 C880,344 888,364 900,364 C912,364 920,344 935,344 H1000"/>
-          <path class="flow" d="M1000,256 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256"/>
-          <path class="flow" d="M1000,344 C1025,344 1030,308 1040,308 H1100 C1110,308 1115,344 1140,344"/>
-          <path class="flow" d="M1140,124 H1190"/>
-          <path class="flow" d="M1140,212 H1190"/>
-          <path class="flow" d="M1140,256 H1190"/>
-          <path class="flow" d="M1140,344 H1190"/>
-        </g>
-        <g class="labels">
-          <text id="lblLaser" class="lbl l-s lbl-laser" x="6" y="106" fill="var(--dx-txt)">1550 nm laser</text>
-          <text class="lbl l-s lbl-ch" x="6" y="150"><tspan class="ch1">λ₁</tspan> <tspan class="ch2">λ₂</tspan> <tspan class="ch3">λ₃</tspan> <tspan class="ch4">λ₄</tspan></text>
-          <text class="lbl l-s lbl-taper" x="74" y="248" fill="var(--ink-faint)">taper</text>
-          <text class="lbl l-s lbl-taper" x="602" y="206" fill="var(--ink-faint)">taper</text>
-          <text class="lbl l-s lbl-taper" x="602" y="360" fill="var(--ink-faint)">taper</text>
-          <text class="lbl lbl-hot" x="360" y="300" text-anchor="middle">Stage 1</text>
-          <text class="lbl l-s" x="900" y="70" text-anchor="middle" fill="var(--ink-faint)">Stage 2 A</text>
-          <text class="lbl l-s" x="900" y="400" text-anchor="middle" fill="var(--ink-faint)">Stage 2 B</text>
-          <text class="lbl lbl-hot lbl-delay" x="338" y="88">2ΔL</text>
-          <text class="lbl lbl-hot lbl-delay" x="884" y="94">ΔL</text>
-          <text class="lbl lbl-hot lbl-delay" x="884" y="336">ΔL</text>
-          <text class="lbl l-s lbl-bdc" x="150" y="150" fill="var(--ink-faint)">bdc</text>
-          <text class="lbl l-s lbl-bdc" x="490" y="150" fill="var(--ink-faint)">bdc</text>
-          <text id="lblLc" class="lbl l-s lbl-lc" x="190" y="238" text-anchor="middle" fill="var(--ink-faint)">Lc</text>
-          <text class="lbl lbl-hot l-s lbl-phase" x="855" y="242" text-anchor="middle">φ</text>
-          <text class="lbl lbl-ch" x="606" y="114"><tspan class="ch2">λ₂</tspan> <tspan class="ch3">λ₃</tspan></text>
-          <text class="lbl lbl-ch" x="606" y="248"><tspan class="ch1">λ₁</tspan> <tspan class="ch4">λ₄</tspan></text>
-          <text class="lbl" x="1198" y="128"><tspan class="ch2" style="font-weight:600">λ₂</tspan> <tspan class="wl" data-ch="2" fill="var(--dx-txt)">1555</tspan></text>
-          <text class="lbl" x="1198" y="216"><tspan class="ch3" style="font-weight:600">λ₃</tspan> <tspan class="wl" data-ch="3" fill="var(--dx-txt)">1557</tspan></text>
-          <text class="lbl" x="1198" y="260"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wl" data-ch="1" fill="var(--dx-txt)">1553</tspan></text>
-          <text class="lbl" x="1198" y="348"><tspan class="ch4" style="font-weight:600">λ₄</tspan> <tspan class="wl" data-ch="4" fill="var(--dx-txt)">1559</tspan></text>
-        </g>
-      </svg>
-      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler · Lc = <span id="lgLc">n/a</span> · gap = <span id="lgGap">n/a</span> · φ = phase shifter · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
-      <button class="dx-open" id="dxOpen" aria-haspopup="dialog">⚙ Customize schematic</button>
-      <div class="dx-panel" id="dxPanel" role="dialog" aria-label="Customize the demux schematic">
-        <div class="dx-bar"><h4><span class="dx-dot"></span>Customize schematic</h4><button class="dx-close" id="dxClose" aria-label="Close">×</button></div>
-        <div class="dx-body">
-          <details class="dx-sec" open><summary>Style &amp; layout</summary><div class="dx-inner">
-          <div class="dx-row"><label>Line thickness <span class="val" id="vLw">1.6</span></label><input type="range" id="cLw" min="0.6" max="4" step="0.2" value="1.6"></div>
-          <div class="dx-row"><label>Text size <span class="val" id="vFs">11 px</span></label><input type="range" id="cFs" min="8" max="18" step="1" value="11"></div>
-          <div class="dx-row"><label>Glow <span class="val" id="vGlow">4 px</span></label><input type="range" id="cGlow" min="0" max="14" step="1" value="4"></div>
-          <div class="dx-row"><label>Overall size (zoom) <span class="val" id="vScale">100 %</span></label><input type="range" id="cScale" min="0.6" max="1.8" step="0.05" value="1"></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Bold text</label><input type="checkbox" id="cBold"></div>
-          <div class="dx-colors"><div class="dx-row"><label>Guides</label><input type="color" id="cAcc" value="#e8843c"></div><div class="dx-row"><label>Text</label><input type="color" id="cTxt" value="#a79c8c"></div></div>
-          <div class="dx-row"><label>Font</label><select id="cFont"><option value="mono">IBM Plex Mono</option><option value="grotesk">Space Grotesk</option><option value="sans">IBM Plex Sans</option><option value="serif">Serif</option></select></div>
-          <div class="dx-row"><label>Line style</label><select id="cLine"><option value="solid">Solid</option><option value="dash">Dashed</option><option value="dot">Dotted</option></select></div>
-          <div class="dx-row"><label>Background</label><select id="cBg"><option value="transparent">Transparent</option><option value="dark">Dark</option><option value="light">Light</option></select></div>
-          </div></details>
-          <details class="dx-sec"><summary>Light flow</summary><div class="dx-inner">
-          <div class="dx-row dx-toggle"><label style="margin:0">Animated flow</label><input type="checkbox" id="cFlow" checked></div>
-          <div class="dx-row"><label>Speed <span class="val" id="vSpeed">7</span></label><input type="range" id="cSpeed" min="1" max="10" step="1" value="7"></div>
-          <div class="dx-row"><label>Pulse size <span class="val" id="vPulse">2.4</span></label><input type="range" id="cPulse" min="1" max="6" step="0.5" value="2.4"></div>
-          <div class="dx-row"><label>Density <span class="val" id="vDensity">4</span></label><input type="range" id="cDensity" min="1" max="10" step="1" value="4"></div>
-          <div class="dx-colors"><div class="dx-row"><label>Flow color</label><input type="color" id="cFlowCol" value="#f6a860"></div></div>
-          </div></details>
-          <details class="dx-sec"><summary>Content (values)</summary><div class="dx-inner">
-          <div class="dx-grid"><div class="dx-row"><label>λ₁ (nm)</label><input type="number" id="cWl1" value="1553" step="1"></div><div class="dx-row"><label>λ₂ (nm)</label><input type="number" id="cWl2" value="1555" step="1"></div><div class="dx-row"><label>λ₃ (nm)</label><input type="number" id="cWl3" value="1557" step="1"></div><div class="dx-row"><label>λ₄ (nm)</label><input type="number" id="cWl4" value="1559" step="1"></div></div>
-          <div class="dx-grid"><div class="dx-row"><label>ΔL (µm)</label><input type="number" id="cDl" value="71.5" step="0.5"></div><div class="dx-row"><label>2ΔL (µm)</label><input type="number" id="cDl2" value="143" step="0.5"></div></div>
-          <div class="dx-grid"><div class="dx-row"><label>Lc (µm)</label><input type="number" id="cLc" value="" step="0.1"></div><div class="dx-row"><label>gap (nm)</label><input type="number" id="cGap" value="" step="1"></div></div>
-          <div class="dx-row"><label>Laser text</label><input type="text" id="cLaser" value="1550 nm laser"></div>
-          <div class="dx-grid"><div class="dx-row"><label>λ₁</label><input type="color" id="cC1" value="#e8705e"></div><div class="dx-row"><label>λ₂</label><input type="color" id="cC2" value="#7fc98e"></div><div class="dx-row"><label>λ₃</label><input type="color" id="cC3" value="#63b7e0"></div><div class="dx-row"><label>λ₄</label><input type="color" id="cC4" value="#d8cebe"></div></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Monochrome (channels)</label><input type="checkbox" id="cMono"></div>
-          </div></details>
-          <details class="dx-sec"><summary>Show / hide</summary><div class="dx-inner">
-          <div class="dx-row dx-toggle"><label style="margin:0">Laser source</label><input type="checkbox" id="cShowLaser" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Ruler</label><input type="checkbox" id="cShowRuler" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Tapers</label><input type="checkbox" id="cShowTaper" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Phase shifter φ</label><input type="checkbox" id="cShowPhase" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Delay labels</label><input type="checkbox" id="cShowDelay" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">BDC labels</label><input type="checkbox" id="cShowBdc" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Lc label</label><input type="checkbox" id="cShowLc" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Channel labels</label><input type="checkbox" id="cShowCh" checked></div>
-          </div></details>
-          <details class="dx-sec"><summary>Export</summary><div class="dx-inner">
-          <div class="dx-exp"><button id="btnSvg">SVG</button><button id="btnPng" class="alt">PNG</button></div>
-          </div></details>
-          <button class="dx-reset" id="dxReset">Reset</button>
-        </div>
-      </div>
-    </div>
   </div>
 </header>
 
@@ -541,17 +392,154 @@
 
 <section id="projects">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Projects &amp; publications</h2></div>
+    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Projects</h2></div>
     <div class="proj">
       <div class="proj-card reveal">
-        <div class="proj-kicker">Publication · Micromachines (2025) · co-author</div>
-        <h3>Pseudo-vertical GaN-on-Si MOSFET</h3>
-        <p>Study of pseudo-vertical MOSFETs on GaN-on-Si for power electronics: process integration and characterization, in continuity with the VertiGo project.</p>
-        <div class="params">
-          <span class="param"><b>Platform</b> GaN-on-Si</span>
-          <span class="param"><b>Device</b> Pseudo-vertical MOSFET</span>
-          <span class="param"><b>Materials</b> III-V</span>
+        <div class="proj-kicker">Integrated photonics · design → fabrication → measurement</div>
+        <h3>1×4 CWDM MZI demultiplexer on SOI</h3>
+        <p>Four-channel demultiplexer on SOI (220 nm): circuit design and simulation (Lumerical INTERCONNECT), GDS layout in KLayout / SiEPIC PDK, then fabrication (ANT NanoSOI MPW) and optical characterization. Cascaded-MZI architecture with broadband directional couplers.</p>
+        <div class="circuit reveal" style="margin-top:22px">
+      <div class="circuit-cap">
+        <span class="eyebrow">1×4 CWDM demux · cascaded MZI · broadband directional couplers (bdc) · SOI</span>
+        <span class="lbl mono" style="color:var(--ink-faint)">λ = <span id="capWl1">1553</span> / <span id="capWl2">1555</span> / <span id="capWl3">1557</span> / <span id="capWl4">1559</span> nm</span>
+      </div>
+      <svg viewBox="0 0 1240 400" role="img" aria-label="1x4 CWDM demultiplexer: cascaded MZI with broadband directional couplers, 1550 nm laser.">
+        <g class="ruler">
+          <line class="tick" x1="30" y1="390" x2="1190" y2="390"/>
+          <line class="tick" x1="40" y1="384" x2="40" y2="396"/>
+          <line class="tick" x1="320" y1="384" x2="320" y2="396"/>
+          <line class="tick" x1="600" y1="384" x2="600" y2="396"/>
+          <line class="tick" x1="900" y1="384" x2="900" y2="396"/>
+          <line class="tick" x1="1180" y1="384" x2="1180" y2="396"/>
+        </g>
+        <g class="source">
+          <rect x="8" y="113" width="26" height="22" rx="3" fill="var(--raised-2)" stroke="var(--dx-accent)" stroke-width="1.4"/>
+          <line x1="22" y1="115" x2="17" y2="133" stroke="var(--dx-accent)" stroke-width="1" opacity=".7"/>
+          <line x1="34" y1="124" x2="40" y2="124" stroke="var(--dx-accent)" stroke-width="var(--dx-lw,1.6)" stroke-linecap="round"/>
+        </g>
+        <g class="wg-layer">
+          <path class="wg" d="M40,124 H120"/>
+          <path class="wg" d="M120,124 C145,124 150,182 160,182 H220 C230,182 235,124 260,124"/>
+          <path class="wg" d="M120,256 C145,256 150,198 160,198 H220 C230,198 235,256 260,256"/>
+          <path class="wg" d="M260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460"/>
+          <path class="wg" d="M260,256 H460"/>
+          <path class="wg" d="M460,124 C485,124 490,182 500,182 H560 C570,182 575,124 600,124"/>
+          <path class="wg" d="M460,256 C485,256 490,198 500,198 H560 C570,198 575,256 600,256"/>
+          <path class="wg" d="M600,124 H660"/>
+          <path class="wg" d="M600,256 H660"/>
+          <path class="wg" d="M660,124 C685,124 690,160 700,160 H760 C770,160 775,124 800,124"/>
+          <path class="wg" d="M660,212 C685,212 690,176 700,176 H760 C770,176 775,212 800,212"/>
+          <path class="wg" d="M800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000"/>
+          <path class="wg" d="M800,212 H1000"/>
+          <path class="wg" d="M1000,124 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124"/>
+          <path class="wg" d="M1000,212 C1025,212 1030,176 1040,176 H1100 C1110,176 1115,212 1140,212"/>
+          <path class="wg" d="M660,256 C685,256 690,292 700,292 H760 C770,292 775,256 800,256"/>
+          <path class="wg" d="M660,344 C685,344 690,308 700,308 H760 C770,308 775,344 800,344"/>
+          <path class="wg" d="M800,256 H1000"/>
+          <path class="wg" d="M800,344 H865 C880,344 888,364 900,364 C912,364 920,344 935,344 H1000"/>
+          <path class="wg" d="M1000,256 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256"/>
+          <path class="wg" d="M1000,344 C1025,344 1030,308 1040,308 H1100 C1110,308 1115,344 1140,344"/>
+          <path class="wg" d="M1140,124 H1190"/>
+          <path class="wg" d="M1140,212 H1190"/>
+          <path class="wg" d="M1140,256 H1190"/>
+          <path class="wg" d="M1140,344 H1190"/>
+        </g>
+        <g class="tapers">
+          <path fill="var(--ink-faint)" d="M120,251 L120,261 L98,256 Z"/>
+          <path fill="var(--ink-faint)" d="M660,207 L660,217 L638,212 Z"/>
+          <path fill="var(--ink-faint)" d="M660,339 L660,349 L638,344 Z"/>
+        </g>
+        <rect class="phase" x="815" y="246" width="80" height="20" rx="2" fill="none" stroke="var(--dx-accent)" stroke-width="1.2" stroke-dasharray="4 3" opacity=".85"/>
+        <g class="lc-bracket" stroke="var(--ink-faint)" stroke-width="1" fill="none">
+          <line x1="160" y1="216" x2="160" y2="224"/><line x1="220" y1="216" x2="220" y2="224"/><line x1="160" y1="220" x2="220" y2="220"/>
+        </g>
+        <g class="flow-layer">
+          <path class="flow o1" d="M40,124 H120 C145,124 150,182 160,182 L220,198 C230,198 235,256 260,256 H460 C485,256 490,198 500,198 H560 C570,198 575,256 600,256 H660 C685,256 690,292 700,292 H760 C770,292 775,256 800,256 H1000 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256 H1190"/>
+          <path class="flow o2" d="M40,124 H120 C145,124 150,182 160,182 H220 C230,182 235,124 260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460 C485,124 490,182 500,182 H560 C570,182 575,124 600,124 H660 C685,124 690,160 700,160 H760 C770,160 775,124 800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124 H1190"/>
+          <path class="flow o3" d="M40,124 H120 C145,124 150,182 160,182 H220 C230,182 235,124 260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460 C485,124 490,182 500,182 H560 C570,182 575,124 600,124 H660 C685,124 690,160 700,160 L760,176 C770,176 775,212 800,212 H1000 C1025,212 1030,176 1040,176 H1100 C1110,176 1115,212 1140,212 H1190"/>
+          <path class="flow o4" d="M40,124 H120 C145,124 150,182 160,182 L220,198 C230,198 235,256 260,256 H460 C485,256 490,198 500,198 H560 C570,198 575,256 600,256 H660 C685,256 690,292 700,292 L760,308 C770,308 775,344 800,344 H865 C880,344 888,364 900,364 C912,364 920,344 935,344 H1000 C1025,344 1030,308 1040,308 H1100 C1110,308 1115,344 1140,344 H1190"/>
+        </g>
+        <g class="labels">
+          <text id="lblLaser" class="lbl l-s lbl-laser" x="6" y="106" fill="var(--dx-txt)">1550 nm laser</text>
+          <text class="lbl l-s lbl-ch" x="6" y="150"><tspan class="ch1">λ₁</tspan> <tspan class="ch2">λ₂</tspan> <tspan class="ch3">λ₃</tspan> <tspan class="ch4">λ₄</tspan></text>
+          <text class="lbl l-s lbl-taper" x="74" y="248" fill="var(--ink-faint)">taper</text>
+          <text class="lbl l-s lbl-taper" x="602" y="206" fill="var(--ink-faint)">taper</text>
+          <text class="lbl l-s lbl-taper" x="602" y="360" fill="var(--ink-faint)">taper</text>
+          <text class="lbl lbl-hot" x="360" y="300" text-anchor="middle">Stage 1</text>
+          <text class="lbl l-s" x="900" y="70" text-anchor="middle" fill="var(--ink-faint)">Stage 2 A</text>
+          <text class="lbl l-s" x="900" y="400" text-anchor="middle" fill="var(--ink-faint)">Stage 2 B</text>
+          <text class="lbl lbl-hot lbl-delay" x="338" y="88">2ΔL</text>
+          <text class="lbl lbl-hot lbl-delay" x="884" y="94">ΔL</text>
+          <text class="lbl lbl-hot lbl-delay" x="884" y="336">ΔL</text>
+          <text class="lbl l-s lbl-bdc" x="150" y="150" fill="var(--ink-faint)">bdc</text>
+          <text class="lbl l-s lbl-bdc" x="490" y="150" fill="var(--ink-faint)">bdc</text>
+          <text id="lblLc" class="lbl l-s lbl-lc" x="190" y="238" text-anchor="middle" fill="var(--ink-faint)">Lc</text>
+          <text class="lbl lbl-hot l-s lbl-phase" x="855" y="242" text-anchor="middle">φ</text>
+          <text class="lbl lbl-ch" x="606" y="114"><tspan class="ch2">λ₂</tspan> <tspan class="ch3">λ₃</tspan></text>
+          <text class="lbl lbl-ch" x="606" y="248"><tspan class="ch1">λ₁</tspan> <tspan class="ch4">λ₄</tspan></text>
+          <text class="lbl" x="1198" y="128"><tspan class="ch2" style="font-weight:600">λ₂</tspan> <tspan class="wl" data-ch="2" fill="var(--dx-txt)">1555</tspan></text>
+          <text class="lbl" x="1198" y="216"><tspan class="ch3" style="font-weight:600">λ₃</tspan> <tspan class="wl" data-ch="3" fill="var(--dx-txt)">1557</tspan></text>
+          <text class="lbl" x="1198" y="260"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wl" data-ch="1" fill="var(--dx-txt)">1553</tspan></text>
+          <text class="lbl" x="1198" y="348"><tspan class="ch4" style="font-weight:600">λ₄</tspan> <tspan class="wl" data-ch="4" fill="var(--dx-txt)">1559</tspan></text>
+        </g>
+      </svg>
+      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler · Lc = <span id="lgLc">n/a</span> · gap = <span id="lgGap">n/a</span> · φ = phase shifter · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
+      <button class="dx-open" id="dxOpen" aria-haspopup="dialog">⚙ Customize schematic</button>
+      <div class="dx-panel" id="dxPanel" role="dialog" aria-label="Customize the demux schematic">
+        <div class="dx-bar"><h4><span class="dx-dot"></span>Customize schematic</h4><button class="dx-close" id="dxClose" aria-label="Close">×</button></div>
+        <div class="dx-body">
+          <details class="dx-sec" open><summary>Style &amp; layout</summary><div class="dx-inner">
+          <div class="dx-row"><label>Line thickness <span class="val" id="vLw">1.6</span></label><input type="range" id="cLw" min="0.6" max="4" step="0.2" value="1.6"></div>
+          <div class="dx-row"><label>Text size <span class="val" id="vFs">11 px</span></label><input type="range" id="cFs" min="8" max="18" step="1" value="11"></div>
+          <div class="dx-row"><label>Glow <span class="val" id="vGlow">4 px</span></label><input type="range" id="cGlow" min="0" max="14" step="1" value="4"></div>
+          <div class="dx-row"><label>Overall size (zoom) <span class="val" id="vScale">100 %</span></label><input type="range" id="cScale" min="0.6" max="1.8" step="0.05" value="1"></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Bold text</label><input type="checkbox" id="cBold"></div>
+          <div class="dx-colors"><div class="dx-row"><label>Guides</label><input type="color" id="cAcc" value="#e8843c"></div><div class="dx-row"><label>Text</label><input type="color" id="cTxt" value="#a79c8c"></div></div>
+          <div class="dx-row"><label>Font</label><select id="cFont"><option value="mono">IBM Plex Mono</option><option value="grotesk">Space Grotesk</option><option value="sans">IBM Plex Sans</option><option value="serif">Serif</option></select></div>
+          <div class="dx-row"><label>Line style</label><select id="cLine"><option value="solid">Solid</option><option value="dash">Dashed</option><option value="dot">Dotted</option></select></div>
+          <div class="dx-row"><label>Background</label><select id="cBg"><option value="transparent">Transparent</option><option value="dark">Dark</option><option value="light">Light</option></select></div>
+          </div></details>
+          <details class="dx-sec"><summary>Light flow</summary><div class="dx-inner">
+          <div class="dx-row dx-toggle"><label style="margin:0">Animated flow</label><input type="checkbox" id="cFlow" checked></div>
+          <div class="dx-row"><label>Speed <span class="val" id="vSpeed">7</span></label><input type="range" id="cSpeed" min="1" max="10" step="1" value="7"></div>
+          <div class="dx-row"><label>Pulse size <span class="val" id="vPulse">2.4</span></label><input type="range" id="cPulse" min="1" max="6" step="0.5" value="2.4"></div>
+          <div class="dx-row"><label>Density <span class="val" id="vDensity">4</span></label><input type="range" id="cDensity" min="1" max="10" step="1" value="4"></div>
+          <div class="dx-colors"><div class="dx-row"><label>Flow color</label><input type="color" id="cFlowCol" value="#f6a860"></div></div>
+          </div></details>
+          <details class="dx-sec"><summary>Content (values)</summary><div class="dx-inner">
+          <div class="dx-grid"><div class="dx-row"><label>λ₁ (nm)</label><input type="number" id="cWl1" value="1553" step="1"></div><div class="dx-row"><label>λ₂ (nm)</label><input type="number" id="cWl2" value="1555" step="1"></div><div class="dx-row"><label>λ₃ (nm)</label><input type="number" id="cWl3" value="1557" step="1"></div><div class="dx-row"><label>λ₄ (nm)</label><input type="number" id="cWl4" value="1559" step="1"></div></div>
+          <div class="dx-grid"><div class="dx-row"><label>ΔL (µm)</label><input type="number" id="cDl" value="71.5" step="0.5"></div><div class="dx-row"><label>2ΔL (µm)</label><input type="number" id="cDl2" value="143" step="0.5"></div></div>
+          <div class="dx-grid"><div class="dx-row"><label>Lc (µm)</label><input type="number" id="cLc" value="" step="0.1"></div><div class="dx-row"><label>gap (nm)</label><input type="number" id="cGap" value="" step="1"></div></div>
+          <div class="dx-row"><label>Laser text</label><input type="text" id="cLaser" value="1550 nm laser"></div>
+          <div class="dx-grid"><div class="dx-row"><label>λ₁</label><input type="color" id="cC1" value="#e8705e"></div><div class="dx-row"><label>λ₂</label><input type="color" id="cC2" value="#7fc98e"></div><div class="dx-row"><label>λ₃</label><input type="color" id="cC3" value="#63b7e0"></div><div class="dx-row"><label>λ₄</label><input type="color" id="cC4" value="#d8cebe"></div></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Monochrome (channels)</label><input type="checkbox" id="cMono"></div>
+          </div></details>
+          <details class="dx-sec"><summary>Show / hide</summary><div class="dx-inner">
+          <div class="dx-row dx-toggle"><label style="margin:0">Laser source</label><input type="checkbox" id="cShowLaser" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Ruler</label><input type="checkbox" id="cShowRuler" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Tapers</label><input type="checkbox" id="cShowTaper" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Phase shifter φ</label><input type="checkbox" id="cShowPhase" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Delay labels</label><input type="checkbox" id="cShowDelay" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">BDC labels</label><input type="checkbox" id="cShowBdc" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Lc label</label><input type="checkbox" id="cShowLc" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Channel labels</label><input type="checkbox" id="cShowCh" checked></div>
+          </div></details>
+          <details class="dx-sec"><summary>Export</summary><div class="dx-inner">
+          <div class="dx-exp"><button id="btnSvg">SVG</button><button id="btnPng" class="alt">PNG</button></div>
+          </div></details>
+          <button class="dx-reset" id="dxReset">Reset</button>
         </div>
+      </div>
+    </div>
+        <div class="params">
+          <span class="param"><b>Platform</b> SOI 220 nm · ANT NanoSOI</span>
+          <span class="param"><b>Waveguide</b> 500×220 nm</span>
+          <span class="param"><b>Splitter</b> broadband directional coupler</span>
+          <span class="param"><b>ER</b> 42–51 dB (sim.)</span>
+          <span class="param"><b>IL</b> &lt; 1.5 dB (sim.)</span>
+          <span class="param"><b>Channels</b> 1553 / 1555 / 1557 / 1559 nm</span>
+        </div>
+        <a class="clink" style="margin-top:16px" href="https://github.com/VOTRE-PSEUDO/cwdm-demux-soi" target="_blank" rel="noopener">View repo →</a>
       </div>
       <div class="proj-card reveal">
         <div class="proj-kicker">Integrated photonics · design → fabrication → data analysis</div>
@@ -566,19 +554,23 @@
         </div>
         <a class="clink" style="margin-top:16px" href="https://github.com/VOTRE-PSEUDO/mzi-soi" target="_blank" rel="noopener">View repo →</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Publications</h2></div>
+    <div class="proj">
       <div class="proj-card reveal">
-        <div class="proj-kicker">Integrated photonics · design → fabrication → measurement</div>
-        <h3>1×4 CWDM MZI demultiplexer on SOI</h3>
-        <p>Four-channel demultiplexer on SOI (220 nm): circuit design and simulation (Lumerical INTERCONNECT), GDS layout in KLayout / SiEPIC PDK, then fabrication (ANT NanoSOI MPW) and optical characterization. Cascaded-MZI architecture with broadband directional couplers.</p>
+        <div class="proj-kicker">Publication · Micromachines (2025) · co-author</div>
+        <h3>Pseudo-vertical GaN-on-Si MOSFET</h3>
+        <p>Study of pseudo-vertical MOSFETs on GaN-on-Si for power electronics: process integration and characterization, in continuity with the VertiGo project.</p>
         <div class="params">
-          <span class="param"><b>Platform</b> SOI 220 nm · ANT NanoSOI</span>
-          <span class="param"><b>Waveguide</b> 500×220 nm</span>
-          <span class="param"><b>Splitter</b> broadband directional coupler</span>
-          <span class="param"><b>ER</b> 42–51 dB (sim.)</span>
-          <span class="param"><b>IL</b> &lt; 1.5 dB (sim.)</span>
-          <span class="param"><b>Channels</b> 1553 / 1555 / 1557 / 1559 nm</span>
+          <span class="param"><b>Platform</b> GaN-on-Si</span>
+          <span class="param"><b>Device</b> Pseudo-vertical MOSFET</span>
+          <span class="param"><b>Materials</b> III-V</span>
         </div>
-        <a class="clink" style="margin-top:16px" href="https://github.com/VOTRE-PSEUDO/cwdm-demux-soi" target="_blank" rel="noopener">View repo →</a>
       </div>
     </div>
   </div>
@@ -586,7 +578,7 @@
 
 <section id="education">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Education</h2></div>
+    <div class="sec-head reveal"><span class="sec-num">06</span><h2>Education</h2></div>
     <div class="edu">
       <div class="edu-card reveal">
         <div class="yr">Master 2 · 2021</div>
