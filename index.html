@@ -1,348 +1,776 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Riadh Ben Abbes — Nanofabrication &amp; Photonic IC Design</title>
-<meta name="description" content="Ingénieur nanofabrication III-V &amp; conception de circuits photoniques intégrés (PIC). De la salle blanche au design GDS.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Riadh Ben Abbes — Nanofabrication &amp; Process Integration Engineer</title>
+<meta name="description" content="Nanofabrication and process integration engineer. Cleanroom, III-V materials, lithography, ICP-RIE etching, photonic integrated circuit design (GDS / PDK)." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --substrate:#000000;
+    --raised:#0B0B12;
+    --raised-2:#13131D;
+    --line:#26263A;
+    --safelight:#7B8BFF;
+    --safelight-hi:#AAB4FF;
+    --waveguide:#FF6A55;
+    --ink:#FFFFFF;
+    --ink-muted:#B9B9C8;
+    --ink-faint:#70708A;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--substrate);color:var(--ink);
+    font-family:"Manrope",system-ui,sans-serif;font-weight:400;
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3{font-family:"Manrope",system-ui,sans-serif;font-weight:600;line-height:1.1;margin:0;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--safelight);
+  }
+  .muted{color:var(--ink-muted);}
+
+  nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(0,0,0,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .brand{font-family:"Manrope",system-ui,sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;}
+  .brand .dot{width:9px;height:9px;border-radius:2px;background:var(--safelight);box-shadow:0 0 12px 1px var(--safelight);}
+  .nav-links{display:flex;gap:28px;font-size:.9rem;}
+  .nav-links a{color:var(--ink-muted);transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{font-size:.85rem;color:var(--safelight)!important;border:1px solid var(--line);padding:8px 16px;border-radius:6px;transition:border-color .2s,background .2s;}
+  .nav-cta:hover{border-color:var(--safelight);background:rgba(123,139,255,.08);}
+
+  header.hero{position:relative;padding:96px 0 40px;overflow:hidden;}
+  .grid-bg{
+    position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(ellipse 90% 70% at 30% 20%,#000 0%,transparent 75%);
+            mask-image:radial-gradient(ellipse 90% 70% at 30% 20%,#000 0%,transparent 75%);
+  }
+  .hero-in{position:relative;z-index:1;}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.1rem);letter-spacing:-.03em;margin:18px 0 0;}
+  .hero h1 .lastname{color:var(--ink);}
+  .lede{font-size:clamp(1.05rem,2.4vw,1.32rem);color:var(--ink);max-width:46ch;margin:22px 0 0;font-weight:300;}
+  .stack-tags{margin-top:20px;font-size:.82rem;color:var(--ink-muted);}
+  .stack-tags .sep{color:var(--safelight);padding:0 8px;}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;}
+  .btn{
+    font-family:"Manrope",system-ui,sans-serif;font-size:.92rem;font-weight:500;
+    padding:13px 24px;border-radius:7px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:9px;
+  }
+  .btn-solid{background:var(--safelight);color:#05060F;border:1px solid var(--safelight);}
+  .btn-solid:hover{background:var(--safelight-hi);border-color:var(--safelight-hi);transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ink-muted);}
+  .locus{margin-top:30px;font-size:.8rem;color:var(--ink-faint);display:flex;align-items:center;gap:8px;}
+  .locus svg{width:13px;height:13px;stroke:var(--safelight);fill:none;stroke-width:1.6;}
+
+  .circuit{margin-top:56px;position:relative;z-index:1;overflow-x:auto;
+    --dx-accent:#7B8BFF; --dx-txt:#B9B9C8; --dx-lw:1.6; --dx-fs:11px; --dx-font:"IBM Plex Mono",monospace;
+    --dx-bg:transparent; --dx-scale:1; --dx-glow:4px; --dx-weight:400;
+    --c1:#FF5A4E; --c2:#3FB6F2; --c3:#45D06E; --c4:#FFC23D;
+    --dx-flow-color:#AAB4FF; --dx-flow-w:2.4; --dx-flow-pulse:16; --dx-flow-period:256; --dx-flow-speed:2.8s;}
+  .circuit-cap{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
+  .circuit svg{width:calc(var(--dx-scale,1) * 100%);height:auto;display:block;background:var(--dx-bg,transparent);border-radius:8px;}
+  .wg{fill:none;stroke:var(--dx-accent,#7B8BFF);stroke-width:var(--dx-lw,1.6);stroke-linecap:round;
+      filter:drop-shadow(0 0 var(--dx-glow,4px) var(--dx-accent,#7B8BFF));}
+  .wg-dim{stroke:var(--dx-accent,#7B8BFF);opacity:.35;}
+  .tick{stroke:var(--line);stroke-width:1;}
+  .lbl{font-family:var(--dx-font);font-size:var(--dx-fs,11px);fill:var(--dx-txt,#B9B9C8);font-weight:var(--dx-weight,400);}
+  .l-s{font-size:calc(var(--dx-fs,11px) * .8);}
+  .lbl-hot{fill:var(--dx-accent,#7B8BFF);}
+  .ch1{fill:var(--c1);} .ch2{fill:var(--c2);} .ch3{fill:var(--c3);} .ch4{fill:var(--c4);}
+  .circuit.mono .ch1,.circuit.mono .ch2,.circuit.mono .ch3,.circuit.mono .ch4{fill:var(--dx-accent);}
+  .circuit.hide-ruler .ruler{display:none;}
+  .circuit.hide-tapers .tapers,.circuit.hide-tapers .lbl-taper{display:none;}
+  .circuit.hide-phase .phase,.circuit.hide-phase .lbl-phase{display:none;}
+  .circuit.hide-laser .source,.circuit.hide-laser .lbl-laser{display:none;}
+  .circuit.hide-delay .lbl-delay{display:none;}
+  .circuit.hide-bdc .lbl-bdc{display:none;}
+  .circuit.hide-lc .lbl-lc,.circuit.hide-lc .lc-bracket{display:none;}
+  .circuit.hide-ch .lbl-ch{display:none;}
+  @media (prefers-reduced-motion:no-preference){
+    .wg{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 2.4s ease forwards .3s;}
+    @keyframes draw{to{stroke-dashoffset:0;}}
+    .flow{stroke-dashoffset:2016;animation:flow var(--dx-flow-speed) linear infinite;}
+    .flow.o1{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0);}
+    .flow.o2{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0.25);}
+    .flow.o3{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0.5);}
+    .flow.o4{animation-delay:calc(2.2s + var(--dx-flow-speed) * 0.75);}
+    @keyframes flow{from{stroke-dashoffset:2016;}to{stroke-dashoffset:0;}}
+  }
+  .flow{fill:none;stroke:var(--dx-flow-color,#AAB4FF);stroke-width:var(--dx-flow-w,2.4);stroke-linecap:round;
+    stroke-dasharray:var(--dx-flow-pulse,16) 2000;
+    filter:drop-shadow(0 0 5px var(--dx-flow-color,#7B8BFF));pointer-events:none;}
+  .circuit.no-flow .flow-layer{display:none;}
+  .dx-open{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-size:.85rem;
+    font-family:"Manrope",system-ui,sans-serif;color:var(--ink);background:var(--raised);
+    border:1px solid var(--line);border-radius:8px;padding:9px 15px;cursor:pointer;transition:border-color .2s,background .2s;}
+  .dx-open:hover{border-color:var(--safelight);background:rgba(123,139,255,.07);}
+  .dx-panel{position:fixed;right:22px;bottom:22px;z-index:70;width:300px;max-width:calc(100vw - 32px);
+    background:var(--raised);border:1px solid #3c3327;border-radius:14px;overflow:hidden;
+    box-shadow:0 18px 50px rgba(0,0,0,.55);opacity:0;transform:translateY(12px) scale(.98);
+    pointer-events:none;transition:opacity .22s ease,transform .22s ease;}
+  .dx-panel.open{opacity:1;transform:none;pointer-events:auto;}
+  .dx-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;
+    background:var(--raised-2);border-bottom:1px solid var(--line);}
+  .dx-bar h4{font-family:"Manrope",system-ui,sans-serif;font-size:.92rem;margin:0;color:var(--ink);}
+  .dx-bar .dx-dot{width:8px;height:8px;border-radius:2px;background:var(--safelight);box-shadow:0 0 10px var(--safelight);margin-right:8px;}
+  .dx-close{background:none;border:none;color:var(--ink-muted);font-size:1.3rem;line-height:1;cursor:pointer;padding:0 2px;}
+  .dx-close:hover{color:var(--ink);}
+  .dx-body{padding:14px;display:flex;flex-direction:column;gap:13px;max-height:60vh;overflow:auto;}
+  .dx-row{display:flex;flex-direction:column;gap:6px;}
+  .dx-row label{font-size:.75rem;color:var(--ink-muted);font-family:"IBM Plex Mono",monospace;letter-spacing:.03em;display:flex;justify-content:space-between;}
+  .dx-row .val{color:var(--safelight);}
+  .dx-body input[type=range]{width:100%;accent-color:var(--safelight);}
+  .dx-body select{width:100%;background:var(--substrate);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 9px;font-size:.85rem;font-family:"Manrope",system-ui,sans-serif;}
+  .dx-colors{display:flex;gap:10px;}
+  .dx-colors .dx-row{flex:1;}
+  .dx-body input[type=color]{width:100%;height:32px;background:var(--substrate);border:1px solid var(--line);border-radius:7px;padding:2px;cursor:pointer;}
+  .dx-toggle{display:flex;align-items:center;justify-content:space-between;}
+  .dx-toggle input{width:16px;height:16px;accent-color:var(--safelight);cursor:pointer;}
+  .dx-reset{margin-top:2px;background:none;border:1px solid var(--line);color:var(--ink-muted);border-radius:7px;padding:8px;font-size:.8rem;cursor:pointer;font-family:"Manrope",system-ui,sans-serif;transition:border-color .2s,color .2s;}
+  .dx-reset:hover{border-color:var(--ink-muted);color:var(--ink);}
+  .dx-sec{border:1px solid var(--line);border-radius:9px;overflow:hidden;}
+  .dx-sec>summary{list-style:none;cursor:pointer;padding:10px 12px;background:var(--raised-2);font-family:"IBM Plex Mono",monospace;
+    font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--safelight);display:flex;justify-content:space-between;align-items:center;}
+  .dx-sec>summary::-webkit-details-marker{display:none;}
+  .dx-sec>summary::after{content:"+";color:var(--ink-muted);font-size:1rem;}
+  .dx-sec[open]>summary::after{content:"\2013";}
+  .dx-sec .dx-inner{padding:12px;display:flex;flex-direction:column;gap:12px;}
+  .dx-body input[type=text],.dx-body input[type=number]{width:100%;background:var(--substrate);color:var(--ink);
+    border:1px solid var(--line);border-radius:7px;padding:7px 9px;font-size:.85rem;font-family:"IBM Plex Mono",monospace;}
+  .dx-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .dx-exp{display:flex;gap:9px;}
+  .dx-exp button{flex:1;background:var(--safelight);color:#05060F;border:none;border-radius:7px;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:"Manrope",system-ui,sans-serif;}
+  .dx-exp button.alt{background:var(--raised-2);color:var(--ink);border:1px solid var(--line);}
+  .dx-exp button:hover{filter:brightness(1.08);}
+  @media (max-width:520px){ .dx-panel{right:8px;left:8px;bottom:8px;width:auto;} .dx-body{max-height:70vh;} }
+
+  section{padding:78px 0;border-top:1px solid var(--line);position:relative;}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:44px;}
+  .sec-num{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--safelight);letter-spacing:.1em;}
+  .sec-head h2{font-size:clamp(1.7rem,4vw,2.4rem);letter-spacing:-.02em;}
+  .prose{max-width:62ch;color:var(--ink-muted);font-size:1.06rem;}
+  .prose strong{color:var(--ink);font-weight:500;}
+
+  .timeline{position:relative;margin-left:6px;}
+  .tl-item{position:relative;padding:0 0 40px 34px;border-left:1px solid var(--line);}
+  .tl-item:last-child{border-left-color:transparent;padding-bottom:0;}
+  .tl-item::before{
+    content:"";position:absolute;left:-6.5px;top:5px;width:12px;height:12px;border-radius:3px;
+    background:var(--substrate);border:2px solid var(--safelight);box-shadow:0 0 10px rgba(123,139,255,.4);
+  }
+  .tl-when{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--ink-faint);letter-spacing:.05em;}
+  .tl-role{font-family:"Manrope",system-ui,sans-serif;font-size:1.18rem;font-weight:600;margin:4px 0 2px;}
+  .tl-org{font-size:.95rem;color:var(--safelight);margin-bottom:10px;}
+  .tl-org .place{color:var(--ink-faint);}
+  .tl-desc{color:var(--ink-muted);font-size:.98rem;max-width:60ch;}
+  .tl-list{list-style:none;margin:0;padding:0;}
+  .tl-list li{position:relative;padding-left:16px;margin-bottom:5px;}
+  .tl-list li:last-child{margin-bottom:0;}
+  .tl-list li::before{content:"\2013";position:absolute;left:0;color:var(--safelight);}
+
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+  .skill-card{background:var(--raised);border:1px solid var(--line);border-radius:12px;padding:24px;transition:border-color .25s,transform .25s;}
+  .skill-card:hover{border-color:#3A3F8F;transform:translateY(-3px);}
+  .skill-card h3{font-size:.82rem;font-family:"IBM Plex Mono",monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--safelight);margin-bottom:16px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-size:.82rem;background:var(--raised-2);border:1px solid var(--line);color:var(--ink);padding:6px 12px;border-radius:6px;}
+  .chip.pic{border-color:rgba(255,106,85,.4);color:#FFB3A8;}
+
+  .proj{display:grid;gap:22px;}
+  .proj-card{background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:30px;position:relative;overflow:hidden;transition:border-color .25s;}
+  .proj-card:hover{border-color:#3A3F8F;}
+  .proj-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--safelight),transparent);}
+  .proj-kicker{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);}
+  .proj-card h3{font-size:1.32rem;margin:8px 0 12px;letter-spacing:-.01em;}
+  .proj-card p{color:var(--ink-muted);font-size:.98rem;max-width:66ch;margin:0 0 16px;}
+  .params{display:flex;flex-wrap:wrap;gap:7px;}
+  .param{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--ink);background:var(--substrate);border:1px solid var(--line);padding:5px 10px;border-radius:5px;}
+  .param b{color:var(--safelight-hi);font-weight:500;}
+
+  .edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+  .edu-card{border:1px solid var(--line);border-radius:12px;padding:24px;}
+  .edu-card .yr{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--safelight);}
+  .edu-card h3{font-size:1.08rem;margin:8px 0 6px;}
+  .edu-card p{color:var(--ink-muted);font-size:.92rem;margin:0;}
+
+  .contact-box{background:var(--raised);border:1px solid var(--line);border-radius:16px;padding:44px;text-align:center;}
+  .contact-box h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:12px;}
+  .contact-box p{color:var(--ink-muted);max-width:48ch;margin:0 auto 28px;}
+  .contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .clink{border:1px solid var(--line);padding:12px 20px;border-radius:8px;font-size:.92rem;color:var(--ink);transition:all .2s;display:inline-flex;align-items:center;gap:9px;}
+  .clink:hover{border-color:var(--safelight);color:var(--safelight-hi);}
+  .clink svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--ink-faint);font-size:.82rem;}
+  .foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media (prefers-reduced-motion:no-preference){
+    .anim-up{opacity:0;animation:up .8s cubic-bezier(.2,.7,.2,1) forwards;}
+    .anim-up.d1{animation-delay:.05s;} .anim-up.d2{animation-delay:.16s;}
+    .anim-up.d3{animation-delay:.28s;} .anim-up.d4{animation-delay:.4s;}
+    .anim-up.d5{animation-delay:.52s;} .anim-up.d6{animation-delay:.64s;}
+    @keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+    .grid-bg{animation:drift 90s linear infinite;}
+    @keyframes drift{to{background-position:64px 64px,64px 64px;}}
+    .brand .dot{animation:breathe 3.4s ease-in-out infinite;}
+    @keyframes breathe{0%,100%{box-shadow:0 0 8px 0 var(--safelight);}50%{box-shadow:0 0 16px 3px var(--safelight);}}
+    .tl-item:first-child::before{animation:nodepulse 2.8s ease-in-out infinite;}
+    @keyframes nodepulse{0%,100%{box-shadow:0 0 8px rgba(123,139,255,.4);}50%{box-shadow:0 0 18px 4px rgba(123,139,255,.7);}}
+    .chip{transition:transform .18s ease,border-color .25s,background .25s;}
+    .chip:hover{transform:translateY(-2px);border-color:var(--safelight);}
+    .btn-solid{position:relative;overflow:hidden;}
+    .btn-solid::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+      background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg);}
+    .btn-solid:hover::after{animation:sheen .8s ease;}
+    @keyframes sheen{to{left:130%;}}
+  }
+  @media (prefers-reduced-motion:reduce){ .flow-layer{display:none;} }
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+    background:linear-gradient(90deg,var(--safelight),var(--safelight-hi));box-shadow:0 0 8px rgba(123,139,255,.6);}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    header.hero{padding:60px 0 20px;}
+    section{padding:56px 0;}
+    .sec-head{margin-bottom:30px;}
+    .contact-box{padding:32px 20px;}
+  }
+  :focus-visible{outline:2px solid var(--safelight);outline-offset:3px;border-radius:3px;}
+</style>
 </head>
 <body>
+<div class="progress" id="prog"></div>
 
-<header class="site-header">
-  <div class="wrap nav">
-    <a href="#top" class="brand">RBA<span class="dot">.</span><span class="sub">nanofab / photonics</span></a>
-    <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false">≡</button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#journey">Journey</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#pdk">PDK</a></li>
-      <li><a href="#connect">Connect</a></li>
-    </ul>
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="dot"></span>Riadh Ben Abbes</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#education">Education</a>
+    </div>
+    <a class="nav-cta" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="grid-bg"></div>
+  <div class="wrap hero-in">
+    <span class="eyebrow anim-up d1">Engineer · Nanofabrication &amp; Process Integration</span>
+    <h1 class="anim-up d2">Riadh<br><span class="lastname">Ben Abbes</span></h1>
+    <p class="lede anim-up d3">I develop, qualify and transfer micro/nanofabrication processes, from thin films to photonic integrated circuits.</p>
+    <div class="stack-tags mono anim-up d4">
+      Cleanroom<span class="sep">/</span>III-V materials<span class="sep">/</span>Lithography<span class="sep">/</span>ICP-RIE etching<span class="sep">/</span>PIC design · GDS / PDK
+    </div>
+    <div class="hero-cta anim-up d5">
+      <a class="btn btn-solid" href="#projects">View my projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+    <div class="locus anim-up d6">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Paris, France
+    </div>
+
+    <!-- SIGNATURE: 1x4 CWDM MZI demux -->
   </div>
 </header>
 
-<main id="top">
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">01</span><h2>About</h2></div>
+    <p class="prose reveal">
+      5+ years of experience in <strong>process development</strong> for
+      <strong>III-V compound semiconductor devices</strong> (GaN, InP, GaAs) and BEOL integration.
+      Strong expertise in <strong>nanofabrication</strong> and advanced statistical analysis methods
+      for yield prediction, process variability modeling, and optimization.
+    </p>
+    <p class="prose reveal" style="margin-top:18px">
+      Complemented by experience in passive <strong>photonic integrated circuit (PIC)</strong> design,
+      with a strong focus on bridging fabrication and design to drive innovation in
+      <strong>integrated photonics</strong>.
+    </p>
+  </div>
+</section>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero grid-bg" style="border-top:none; padding-top:clamp(56px,10vh,100px);">
-    <div class="wrap hero-grid">
-      <div class="reveal in">
-        <div class="eyebrow">Process Integration &amp; PIC Design</div>
-        <h1>Du wafer en salle blanche<br>au <span class="accent">design GDS.</span></h1>
-        <p class="lede">
-          Je suis Riadh, ingénieur nanofabrication spécialisé matériaux III-V (GaN, InP, GaAs)
-          et conception de circuits photoniques intégrés sur silicium. Deux mondes que je relie :
-          la fabrication physique et la modélisation optique.
-        </p>
-        <div class="hero-meta">
-          <div>📍 <span>Paris, Île-de-France</span></div>
-          <div>🏛 <span>INSP — Sorbonne Université</span></div>
-          <div>🎓 <span>UBCx Silicon Photonics Design</span></div>
-        </div>
-        <div class="cta-row">
-          <a href="#projects" class="btn btn-primary">Voir mes projets</a>
-          <a href="#connect" class="btn btn-ghost">Me contacter</a>
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">02</span><h2>Experience</h2></div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-when">Nov 2025 – Present · Paris</div>
+        <div class="tl-role">Nanofabrication Engineer, Cleanroom Platform Lead</div>
+        <div class="tl-org">INSP, Institute of NanoSciences of Paris <span class="place">· Sorbonne University / CNRS</span></div>
+        <div class="tl-desc">Running the nanofabrication platform and developing thin-film processes. Training and supporting users. Equipment qualification and commissioning.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">2023–2025 · Grenoble</div>
+        <div class="tl-role">Process Integration, III-V devices</div>
+        <div class="tl-org">CEA-Leti / LTM <span class="place">· VertiGo project</span></div>
+        <div class="tl-desc"><ul class="tl-list">
+          <li>Process integration of GaN-on-Si vertical trench MOSFETs for power devices</li>
+          <li>Contact-level processing of 940 nm micro-LEDs on 300 mm Si (InGaAs/AlGaAs MQWs)</li>
+        </ul></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">2022–2023 · Aix-en-Provence</div>
+        <div class="tl-role">Process Engineer, Ion Implantation</div>
+        <div class="tl-org">Ion Beam Services (IBS)</div>
+        <div class="tl-desc">Plasma immersion ion implantation.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">2021 · Crolles</div>
+        <div class="tl-role">BEOL Integration (M2 internship)</div>
+        <div class="tl-org">STMicroelectronics</div>
+        <div class="tl-desc">Back-end-of-line (BEOL) damascene integration on 300 mm wafers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">03</span><h2>Skills</h2></div>
+    <div class="skill-grid">
+      <div class="skill-card reveal">
+        <h3>Processes &amp; cleanroom</h3>
+        <div class="chips">
+          <span class="chip">ICP-RIE</span><span class="chip">ALD</span><span class="chip">PECVD</span>
+          <span class="chip">PVD</span><span class="chip">Optical &amp; laser lithography</span><span class="chip">E-beam lithography</span><span class="chip">Lift-off</span>
+          <span class="chip">DOE</span><span class="chip">SPC</span>
         </div>
       </div>
-
-      <div class="reveal in">
-        <div class="spectrum-card">
-          <div class="label-row">
-            <span>1×4 CWDM DEMUX — TRANSMISSION</span>
-            <span>C-BAND</span>
-          </div>
-          <svg viewBox="0 0 480 220" xmlns="http://www.w3.org/2000/svg" aria-label="Spectre de transmission CWDM, quatre canaux">
-            <defs>
-              <linearGradient id="fadeGrid" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#232b32" stop-opacity="0.6"/>
-                <stop offset="100%" stop-color="#232b32" stop-opacity="0.1"/>
-              </linearGradient>
-            </defs>
-            <!-- grid -->
-            <g stroke="#1c242b" stroke-width="1">
-              <line x1="30" y1="20" x2="30" y2="180"/>
-              <line x1="142" y1="20" x2="142" y2="180"/>
-              <line x1="254" y1="20" x2="254" y2="180"/>
-              <line x1="366" y1="20" x2="366" y2="180"/>
-              <line x1="30" y1="180" x2="460" y2="180"/>
-              <line x1="30" y1="130" x2="460" y2="130"/>
-              <line x1="30" y1="80" x2="460" y2="80"/>
-              <line x1="30" y1="30" x2="460" y2="30"/>
-            </g>
-            <!-- baseline -->
-            <line x1="30" y1="180" x2="460" y2="180" stroke="#3a444c" stroke-width="1.2"/>
-
-            <!-- ch1 1553nm red -->
-            <path d="M30,178 L70,177 L92,160 L102,60 L112,160 L134,177 L460,178"
-                  fill="none" stroke="#e8645f" stroke-width="2">
-              <animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.1s" fill="freeze" />
-            </path>
-            <!-- ch2 1555nm blue -->
-            <path d="M30,178 L150,177 L172,160 L182,32 L192,160 L214,177 L460,178"
-                  fill="none" stroke="#4f9fd6" stroke-width="2">
-              <animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.3s" fill="freeze" />
-            </path>
-            <!-- ch3 1557nm green -->
-            <path d="M30,178 L228,177 L250,160 L260,50 L270,160 L292,177 L460,178"
-                  fill="none" stroke="#5fb87b" stroke-width="2">
-              <animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.5s" fill="freeze" />
-            </path>
-            <!-- ch4 1559nm amber -->
-            <path d="M30,178 L306,177 L328,160 L338,58 L348,160 L370,177 L460,178"
-                  fill="none" stroke="#ffb454" stroke-width="2">
-              <animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.7s" fill="freeze" />
-            </path>
-
-            <!-- x labels -->
-            <g font-family="JetBrains Mono, monospace" font-size="9" fill="#5c6970">
-              <text x="92" y="198" text-anchor="middle">1553</text>
-              <text x="182" y="198" text-anchor="middle">1555</text>
-              <text x="260" y="198" text-anchor="middle">1557</text>
-              <text x="338" y="198" text-anchor="middle">1559</text>
-              <text x="10" y="34" text-anchor="middle">0</text>
-              <text x="10" y="184" text-anchor="middle">-50</text>
-            </g>
-          </svg>
-          <div class="chan-legend">
-            <span class="sw"><i style="background:#e8645f"></i>λ₁ 1553nm</span>
-            <span class="sw"><i style="background:#4f9fd6"></i>λ₂ 1555nm</span>
-            <span class="sw"><i style="background:#5fb87b"></i>λ₃ 1557nm</span>
-            <span class="sw"><i style="background:#ffb454"></i>λ₄ 1559nm</span>
-          </div>
+      <div class="skill-card reveal">
+        <h3>Characterization</h3>
+        <div class="chips">
+          <span class="chip">AFM</span><span class="chip">SEM</span><span class="chip">Ellipsometry</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>III-V materials &amp; GaN</h3>
+        <div class="chips">
+          <span class="chip">GaN</span><span class="chip">InP</span><span class="chip">GaAs</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>Photonic design &amp; simulation</h3>
+        <div class="chips">
+          <span class="chip pic">gdsfactory</span><span class="chip pic">KLayout</span><span class="chip pic">SiEPIC PDK</span>
+          <span class="chip pic">Lumerical FDTD / MODE / INTERCONNECT</span>
+          <span class="chip pic">GDS layout &amp; PDK dev.</span><span class="chip pic">Python / data analysis</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ ABOUT ============ -->
-  <section id="about">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">About</div>
-        <h2>Deux compétences, un même fil conducteur.</h2>
-        <p>La fabrication physique de composants III-V et la conception de circuits photoniques sur silicium partagent les mêmes contraintes : géométrie, matériaux, tolérance de procédé.</p>
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Projects</h2></div>
+    <div class="proj">
+      <div class="proj-card reveal">
+        <div class="proj-kicker">Integrated photonics · design → fabrication → measurement</div>
+        <h3>1×4 CWDM MZI demultiplexer on SOI</h3>
+        <p>Four-channel demultiplexer on SOI (220 nm): circuit design and simulation (Lumerical INTERCONNECT), GDS layout in KLayout / SiEPIC PDK, then fabrication (ANT NanoSOI MPW) and optical characterization. Cascaded-MZI architecture with broadband directional couplers.</p>
+        <div class="circuit reveal hide-phase" style="margin-top:22px">
+      <div class="circuit-cap">
+        <span class="eyebrow">1×4 CWDM demux · cascaded MZI · broadband directional couplers (bdc) · SOI</span>
+        <span class="lbl mono" style="color:var(--ink-faint)">λ = <span id="capWl1">1553</span> / <span id="capWl2">1555</span> / <span id="capWl3">1557</span> / <span id="capWl4">1559</span> nm</span>
       </div>
-
-      <div class="about-grid">
-        <div>
-          <p>
-            Je travaille actuellement à l'<strong>Institut des NanoSciences de Paris (INSP — Sorbonne Université)</strong>
-            sur la nanofabrication de dispositifs en matériaux III-V (GaN, InP, GaAs). Mon parcours m'a fait passer
-            par le <strong>CEA-Leti / LTM</strong>, <strong>STMicroelectronics</strong> et <strong>IBS Ion Beam Services</strong>,
-            où j'ai développé une expertise en microfabrication salle blanche : ICP-RIE, ALD, PECVD, PVD, lithographie e-beam.
-          </p>
-          <p>
-            En parallèle, je me suis spécialisé en <strong>conception de circuits photoniques intégrés (PIC)</strong> :
-            simulation FDTD/MODE/INTERCONNECT sous Lumerical, layout sous KLayout avec le PDK SiEPIC, et flux de
-            conception avec gdsfactory. Cette double compétence me permet de comprendre un design photonique
-            aussi bien du point de vue du masque que du point de vue du procédé qui le fabrique réellement.
-          </p>
-          <p>
-            Titulaire d'un Master en microélectronique de Polytech Tours et d'une certification
-            <strong>UBCx Silicon Photonics Design</strong>, avec une publication dans <em>Micromachines (MDPI, 2024)</em>
-            sur des MOSFET à tranchée verticale GaN-on-Si.
-          </p>
-        </div>
-
-        <div>
-          <ul class="stack-list">
-            <li><span>Matériaux III-V</span><span>GaN · InP · GaAs</span></li>
-            <li><span>Procédés salle blanche</span><span>ICP-RIE · ALD · PECVD · PVD</span></li>
-            <li><span>Lithographie</span><span>E-beam</span></li>
-            <li><span>Simulation PIC</span><span>Lumerical FDTD / MODE / INTERCONNECT</span></li>
-            <li><span>Layout / PDK</span><span>KLayout · SiEPIC · gdsfactory · OpenLight</span></li>
-            <li><span>Fabrication MPW</span><span>ANT NanoSOI</span></li>
-            <li><span>Formation</span><span>Master Microélectronique, Polytech Tours</span></li>
-            <li><span>Certification</span><span>UBCx Silicon Photonics Design</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ JOURNEY ============ -->
-  <section id="journey">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">Journey</div>
-        <h2>Parcours</h2>
-        <p>De la croissance de matériaux III-V à la conception de circuits photoniques sur silicium.</p>
-      </div>
-
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-date">Fév. – Mars 2026</div>
-          <h3>Démultiplexeur CWDM 1×4 sur SOI</h3>
-          <p>Conception et caractérisation d'un démultiplexeur basé sur un arbre binaire de MZI en cascade
-          avec coupleurs directionnels large bande (BDC), fabriqué via le procédé MPW ANT NanoSOI. Article IEEE en finalisation.</p>
-          <div class="tl-tags"><span>SiEPIC PDK</span><span>KLayout</span><span>INTERCONNECT</span></div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-date">Sept. – Déc. 2025</div>
-          <h3>Interféromètres MZI &amp; Michelson en bande C</h3>
-          <p>Développement de structures de test photoniques, scripts d'extraction de pics et de normalisation
-          de données expérimentales (mesures sondes Applied Nanotools).</p>
-          <div class="tl-tags"><span>Python</span><span>Lumerical MODE</span></div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-date">2024</div>
-          <h3>Publication — MOSFET à tranchée verticale GaN-on-Si</h3>
-          <p>Publication dans Micromachines (MDPI) sur la fabrication et caractérisation de dispositifs verticaux GaN-on-Si.</p>
-          <div class="tl-tags"><span>GaN</span><span>Nanofabrication</span></div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-date">Avant 2024</div>
-          <h3>CEA-Leti / LTM, STMicroelectronics, IBS</h3>
-          <p>Formation et expérience en microfabrication salle blanche sur matériaux III-V : gravure ICP-RIE,
-          dépôts ALD/PECVD/PVD, lithographie e-beam.</p>
-          <div class="tl-tags"><span>Salle blanche</span><span>III-V</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PROJECTS ============ -->
-  <section id="projects">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">Projects</div>
-        <h2>Projets sélectionnés</h2>
-        <p>Conception, simulation et caractérisation expérimentale de circuits photoniques intégrés.</p>
-      </div>
-
-      <div class="proj-grid">
-        <div class="proj-card">
-          <div class="ptag">PIC DESIGN · SOI</div>
-          <h3>1×4 CWDM Demultiplexer</h3>
-          <p>Arbre binaire de deux étages de MZI en cascade avec coupleurs directionnels large bande,
-          ciblant les canaux 1553/1555/1557/1559 nm. Fabriqué via ANT NanoSOI MPW.</p>
-          <div class="proj-stats">
-            <div><span class="v">42–51 dB</span><span class="k">ER</span></div>
-            <div><span class="v">&lt;1.5 dB</span><span class="k">IL</span></div>
-            <div><span class="v">7.9 nm</span><span class="k">FSR</span></div>
-          </div>
-          <div class="links">
-            <a href="https://github.com/Riadh-BEN-ABBES/mzi-cwdm-demultiplexer" target="_blank" rel="noopener">Code →</a>
-          </div>
-        </div>
-
-        <div class="proj-card">
-          <div class="ptag">SIMULATION · MODE/FDTD</div>
-          <h3>Silicon Photonics Simulations</h3>
-          <p>Bibliothèque de scripts de simulation et d'analyse : extraction de spectres, calculs de ng et FSR,
-          ajustement de réponses MZI sur données expérimentales.</p>
-          <div class="proj-stats">
-            <div><span class="v">4.18</span><span class="k">ng</span></div>
-            <div><span class="v">≤3.57%</span><span class="k">BDC imbal.</span></div>
-            <div><span class="v">Python</span><span class="k">Stack</span></div>
-          </div>
-          <div class="links">
-            <a href="https://github.com/Riadh-BEN-ABBES/silicon-photonics-simulations" target="_blank" rel="noopener">Code →</a>
-          </div>
-        </div>
-
-        <div class="proj-card">
-          <div class="ptag">LAYOUT · PDK</div>
-          <h3>PIC Layout &amp; PDKs</h3>
-          <p>Layouts GDS et structures de test sous SiEPIC PDK et OpenLight PDK, incluant un parseur GDS
-          développé pour le rendu publication des coupleurs BDC.</p>
-          <div class="proj-stats">
-            <div><span class="v">405×600 µm²</span><span class="k">Footprint</span></div>
-            <div><span class="v">3</span><span class="k">Test structures</span></div>
-            <div><span class="v">KLayout</span><span class="k">Tool</span></div>
-          </div>
-          <div class="links">
-            <a href="https://github.com/Riadh-BEN-ABBES/pic-layout-pdks" target="_blank" rel="noopener">Code →</a>
-          </div>
+      <svg viewBox="0 0 1240 400" role="img" aria-label="1x4 CWDM demultiplexer: cascaded MZI with broadband directional couplers, 1550 nm laser.">
+        <g class="ruler">
+          <line class="tick" x1="30" y1="390" x2="1190" y2="390"/>
+          <line class="tick" x1="40" y1="384" x2="40" y2="396"/>
+          <line class="tick" x1="320" y1="384" x2="320" y2="396"/>
+          <line class="tick" x1="600" y1="384" x2="600" y2="396"/>
+          <line class="tick" x1="900" y1="384" x2="900" y2="396"/>
+          <line class="tick" x1="1180" y1="384" x2="1180" y2="396"/>
+        </g>
+        <g class="source">
+          <rect x="8" y="113" width="26" height="22" rx="3" fill="var(--raised-2)" stroke="var(--dx-accent)" stroke-width="1.4"/>
+          <line x1="22" y1="115" x2="17" y2="133" stroke="var(--dx-accent)" stroke-width="1" opacity=".7"/>
+          <line x1="34" y1="124" x2="40" y2="124" stroke="var(--dx-accent)" stroke-width="var(--dx-lw,1.6)" stroke-linecap="round"/>
+        </g>
+        <g class="wg-layer">
+          <path class="wg" d="M40,124 H120"/>
+          <path class="wg" d="M120,124 C145,124 150,182 160,182 H220 C230,182 235,124 260,124"/>
+          <path class="wg" d="M120,256 C145,256 150,198 160,198 H220 C230,198 235,256 260,256"/>
+          <path class="wg" d="M260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460"/>
+          <path class="wg" d="M260,256 H460"/>
+          <path class="wg" d="M460,124 C485,124 490,182 500,182 H560 C570,182 575,124 600,124"/>
+          <path class="wg" d="M460,256 C485,256 490,198 500,198 H560 C570,198 575,256 600,256"/>
+          <path class="wg" d="M600,124 H660"/>
+          <path class="wg" d="M600,256 H660"/>
+          <path class="wg" d="M660,124 C685,124 690,160 700,160 H760 C770,160 775,124 800,124"/>
+          <path class="wg" d="M660,212 C685,212 690,176 700,176 H760 C770,176 775,212 800,212"/>
+          <path class="wg" d="M800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000"/>
+          <path class="wg" d="M800,212 H1000"/>
+          <path class="wg" d="M1000,124 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124"/>
+          <path class="wg" d="M1000,212 C1025,212 1030,176 1040,176 H1100 C1110,176 1115,212 1140,212"/>
+          <path class="wg" d="M660,256 C685,256 690,292 700,292 H760 C770,292 775,256 800,256"/>
+          <path class="wg" d="M660,344 C685,344 690,308 700,308 H760 C770,308 775,344 800,344"/>
+          <path class="wg" d="M800,256 H1000"/>
+          <path class="wg" d="M800,344 H865 C880,344 888,364 900,364 C912,364 920,344 935,344 H1000"/>
+          <path class="wg" d="M1000,256 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256"/>
+          <path class="wg" d="M1000,344 C1025,344 1030,308 1040,308 H1100 C1110,308 1115,344 1140,344"/>
+          <path class="wg" d="M1140,124 H1190"/>
+          <path class="wg" d="M1140,212 H1190"/>
+          <path class="wg" d="M1140,256 H1190"/>
+          <path class="wg" d="M1140,344 H1190"/>
+        </g>
+        <g class="tapers">
+          <path fill="var(--ink-faint)" d="M120,251 L120,261 L98,256 Z"/>
+          <path fill="var(--ink-faint)" d="M660,207 L660,217 L638,212 Z"/>
+          <path fill="var(--ink-faint)" d="M660,339 L660,349 L638,344 Z"/>
+        </g>
+        <rect class="phase" x="815" y="246" width="80" height="20" rx="2" fill="none" stroke="var(--dx-accent)" stroke-width="1.2" stroke-dasharray="4 3" opacity=".85"/>
+        <g class="lc-bracket" stroke="var(--ink-faint)" stroke-width="1" fill="none">
+          <line x1="160" y1="216" x2="160" y2="224"/><line x1="220" y1="216" x2="220" y2="224"/><line x1="160" y1="220" x2="220" y2="220"/>
+        </g>
+        <g class="flow-layer">
+          <path class="flow o1" d="M40,124 H120 C145,124 150,182 160,182 L220,198 C230,198 235,256 260,256 H460 C485,256 490,198 500,198 H560 C570,198 575,256 600,256 H660 C685,256 690,292 700,292 H760 C770,292 775,256 800,256 H1000 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256 H1190"/>
+          <path class="flow o2" d="M40,124 H120 C145,124 150,182 160,182 H220 C230,182 235,124 260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460 C485,124 490,182 500,182 H560 C570,182 575,124 600,124 H660 C685,124 690,160 700,160 H760 C770,160 775,124 800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124 H1190"/>
+          <path class="flow o3" d="M40,124 H120 C145,124 150,182 160,182 H220 C230,182 235,124 260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460 C485,124 490,182 500,182 H560 C570,182 575,124 600,124 H660 C685,124 690,160 700,160 L760,176 C770,176 775,212 800,212 H1000 C1025,212 1030,176 1040,176 H1100 C1110,176 1115,212 1140,212 H1190"/>
+          <path class="flow o4" d="M40,124 H120 C145,124 150,182 160,182 L220,198 C230,198 235,256 260,256 H460 C485,256 490,198 500,198 H560 C570,198 575,256 600,256 H660 C685,256 690,292 700,292 L760,308 C770,308 775,344 800,344 H865 C880,344 888,364 900,364 C912,364 920,344 935,344 H1000 C1025,344 1030,308 1040,308 H1100 C1110,308 1115,344 1140,344 H1190"/>
+        </g>
+        <g class="labels">
+          <text id="lblLaser" class="lbl l-s lbl-laser" x="6" y="106" fill="var(--dx-txt)">1550 nm laser</text>
+          <text class="lbl l-s lbl-ch" x="6" y="150"><tspan class="ch1">λ₁</tspan> <tspan class="ch2">λ₂</tspan> <tspan class="ch3">λ₃</tspan> <tspan class="ch4">λ₄</tspan></text>
+          <text class="lbl l-s lbl-taper" x="74" y="248" fill="var(--ink-faint)">taper</text>
+          <text class="lbl l-s lbl-taper" x="602" y="206" fill="var(--ink-faint)">taper</text>
+          <text class="lbl l-s lbl-taper" x="602" y="360" fill="var(--ink-faint)">taper</text>
+          <text class="lbl lbl-hot" x="360" y="300" text-anchor="middle">Stage 1</text>
+          <text class="lbl l-s" x="900" y="70" text-anchor="middle" fill="var(--ink-faint)">Stage 2 A</text>
+          <text class="lbl l-s" x="900" y="400" text-anchor="middle" fill="var(--ink-faint)">Stage 2 B</text>
+          <text class="lbl lbl-hot lbl-delay" x="338" y="88">2ΔL</text>
+          <text class="lbl lbl-hot lbl-delay" x="884" y="94">ΔL</text>
+          <text class="lbl lbl-hot lbl-delay" x="884" y="336">ΔL</text>
+          <text class="lbl l-s lbl-bdc" x="150" y="150" fill="var(--ink-faint)">bdc</text>
+          <text class="lbl l-s lbl-bdc" x="490" y="150" fill="var(--ink-faint)">bdc</text>
+          <text id="lblLc" class="lbl l-s lbl-lc" x="190" y="238" text-anchor="middle" fill="var(--ink-faint)">Lc</text>
+          <text class="lbl lbl-hot l-s lbl-phase" x="855" y="242" text-anchor="middle">φ</text>
+          <text class="lbl lbl-ch" x="606" y="114"><tspan class="ch2">λ₂</tspan> <tspan class="ch4">λ₄</tspan></text>
+          <text class="lbl lbl-ch" x="606" y="248"><tspan class="ch3">λ₃</tspan> <tspan class="ch1">λ₁</tspan></text>
+          <text class="lbl" x="1198" y="128"><tspan class="ch2" style="font-weight:600">λ₂</tspan> <tspan class="wl" data-ch="2" fill="var(--dx-txt)">1555</tspan></text>
+          <text class="lbl" x="1198" y="216"><tspan class="ch4" style="font-weight:600">λ₄</tspan> <tspan class="wl" data-ch="4" fill="var(--dx-txt)">1559</tspan></text>
+          <text class="lbl" x="1198" y="260"><tspan class="ch3" style="font-weight:600">λ₃</tspan> <tspan class="wl" data-ch="3" fill="var(--dx-txt)">1557</tspan></text>
+          <text class="lbl" x="1198" y="348"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wl" data-ch="1" fill="var(--dx-txt)">1553</tspan></text>
+        </g>
+      </svg>
+      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler · Lc = <span id="lgLc">50.7 µm</span> · gap = <span id="lgGap">200 nm</span> · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
+      <button class="dx-open" id="dxOpen" aria-haspopup="dialog">⚙ Customize schematic</button>
+      <div class="dx-panel" id="dxPanel" role="dialog" aria-label="Customize the demux schematic">
+        <div class="dx-bar"><h4><span class="dx-dot"></span>Customize schematic</h4><button class="dx-close" id="dxClose" aria-label="Close">×</button></div>
+        <div class="dx-body">
+          <details class="dx-sec" open><summary>Style &amp; layout</summary><div class="dx-inner">
+          <div class="dx-row"><label>Line thickness <span class="val" id="vLw">1.6</span></label><input type="range" id="cLw" min="0.6" max="4" step="0.2" value="1.6"></div>
+          <div class="dx-row"><label>Text size <span class="val" id="vFs">11 px</span></label><input type="range" id="cFs" min="8" max="18" step="1" value="11"></div>
+          <div class="dx-row"><label>Glow <span class="val" id="vGlow">4 px</span></label><input type="range" id="cGlow" min="0" max="14" step="1" value="4"></div>
+          <div class="dx-row"><label>Overall size (zoom) <span class="val" id="vScale">100 %</span></label><input type="range" id="cScale" min="0.6" max="1.8" step="0.05" value="1"></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Bold text</label><input type="checkbox" id="cBold"></div>
+          <div class="dx-colors"><div class="dx-row"><label>Guides</label><input type="color" id="cAcc" value="#7b8bff"></div><div class="dx-row"><label>Text</label><input type="color" id="cTxt" value="#b9b9c8"></div></div>
+          <div class="dx-row"><label>Font</label><select id="cFont"><option value="mono">IBM Plex Mono</option><option value="grotesk">Manrope</option><option value="serif">Serif</option></select></div>
+          <div class="dx-row"><label>Line style</label><select id="cLine"><option value="solid">Solid</option><option value="dash">Dashed</option><option value="dot">Dotted</option></select></div>
+          <div class="dx-row"><label>Background</label><select id="cBg"><option value="transparent">Transparent</option><option value="dark">Dark</option><option value="light">Light</option></select></div>
+          </div></details>
+          <details class="dx-sec"><summary>Light flow</summary><div class="dx-inner">
+          <div class="dx-row dx-toggle"><label style="margin:0">Animated flow</label><input type="checkbox" id="cFlow" checked></div>
+          <div class="dx-row"><label>Speed <span class="val" id="vSpeed">7</span></label><input type="range" id="cSpeed" min="1" max="10" step="1" value="7"></div>
+          <div class="dx-row"><label>Pulse size <span class="val" id="vPulse">2.4</span></label><input type="range" id="cPulse" min="1" max="6" step="0.5" value="2.4"></div>
+          <div class="dx-row"><label>Density <span class="val" id="vDensity">4</span></label><input type="range" id="cDensity" min="1" max="10" step="1" value="4"></div>
+          <div class="dx-colors"><div class="dx-row"><label>Flow color</label><input type="color" id="cFlowCol" value="#aab4ff"></div></div>
+          </div></details>
+          <details class="dx-sec"><summary>Content (values)</summary><div class="dx-inner">
+          <div class="dx-grid"><div class="dx-row"><label>λ₁ (nm)</label><input type="number" id="cWl1" value="1553" step="1"></div><div class="dx-row"><label>λ₂ (nm)</label><input type="number" id="cWl2" value="1555" step="1"></div><div class="dx-row"><label>λ₃ (nm)</label><input type="number" id="cWl3" value="1557" step="1"></div><div class="dx-row"><label>λ₄ (nm)</label><input type="number" id="cWl4" value="1559" step="1"></div></div>
+          <div class="dx-grid"><div class="dx-row"><label>ΔL (µm)</label><input type="number" id="cDl" value="71.5" step="0.5"></div><div class="dx-row"><label>2ΔL (µm)</label><input type="number" id="cDl2" value="143" step="0.5"></div></div>
+          <div class="dx-grid"><div class="dx-row"><label>Lc (µm)</label><input type="number" id="cLc" value="50.7" step="0.1"></div><div class="dx-row"><label>gap (nm)</label><input type="number" id="cGap" value="200" step="1"></div></div>
+          <div class="dx-row"><label>Laser text</label><input type="text" id="cLaser" value="1550 nm laser"></div>
+          <div class="dx-grid"><div class="dx-row"><label>λ₁</label><input type="color" id="cC1" value="#ff5a4e"></div><div class="dx-row"><label>λ₂</label><input type="color" id="cC2" value="#3fb6f2"></div><div class="dx-row"><label>λ₃</label><input type="color" id="cC3" value="#45d06e"></div><div class="dx-row"><label>λ₄</label><input type="color" id="cC4" value="#ffc23d"></div></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Monochrome (channels)</label><input type="checkbox" id="cMono"></div>
+          </div></details>
+          <details class="dx-sec"><summary>Show / hide</summary><div class="dx-inner">
+          <div class="dx-row dx-toggle"><label style="margin:0">Laser source</label><input type="checkbox" id="cShowLaser" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Ruler</label><input type="checkbox" id="cShowRuler" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Tapers</label><input type="checkbox" id="cShowTaper" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Phase shifter φ</label><input type="checkbox" id="cShowPhase"></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Delay labels</label><input type="checkbox" id="cShowDelay" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">BDC labels</label><input type="checkbox" id="cShowBdc" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Lc label</label><input type="checkbox" id="cShowLc" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Channel labels</label><input type="checkbox" id="cShowCh" checked></div>
+          </div></details>
+          <details class="dx-sec"><summary>Export</summary><div class="dx-inner">
+          <div class="dx-exp"><button id="btnSvg">SVG</button><button id="btnPng" class="alt">PNG</button></div>
+          </div></details>
+          <button class="dx-reset" id="dxReset">Reset</button>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ============ PDK ============ -->
-  <section id="pdk">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">PDK &amp; Tools</div>
-        <h2>Environnement de conception</h2>
-        <p>De la simulation au masque, l'environnement que j'utilise au quotidien.</p>
+        <div class="params">
+          <span class="param"><b>Platform</b> SOI 220 nm · ANT NanoSOI</span>
+          <span class="param"><b>Waveguide</b> 500×220 nm</span>
+          <span class="param"><b>Splitter</b> broadband directional coupler</span>
+          <span class="param"><b>ER</b> 23–35 dB (meas.)</span>
+          <span class="param"><b>IL</b> 1.5–3.3 dB (meas.)</span>
+          <span class="param"><b>Channels</b> 1553 / 1555 / 1557 / 1559 nm</span>
+        </div>
+        <a class="clink" style="margin-top:16px" href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux" target="_blank" rel="noopener">View repo →</a>
       </div>
+      <div class="proj-card reveal">
+        <div class="proj-kicker">Integrated photonics · design → fabrication → data analysis</div>
+        <h3>Mach-Zehnder interferometer on SOI</h3>
+        <p>Design, simulation, fabrication and measurement of an unbalanced Mach-Zehnder interferometer on SOI. Spectral data were analyzed to extract the waveguide group index and chromatic dispersion. First silicon-photonics project (UBCx), establishing the design-to-measurement workflow later reused for the CWDM demultiplexer.</p>
+        <div class="params">
+          <span class="param"><b>Platform</b> SOI 220 nm · ANT NanoSOI</span>
+          <span class="param"><b>Device</b> Unbalanced MZI</span>
+          <span class="param"><b>Extracted</b> group index, dispersion</span>
+          <span class="param"><b>Analysis</b> Python</span>
+          <span class="param"><b>Tools</b> Lumerical · KLayout · SiEPIC</span>
+        </div>
+        <a class="clink" style="margin-top:16px" href="https://github.com/VOTRE-PSEUDO/mzi-soi" target="_blank" rel="noopener">View repo →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="pdk-grid">
-        <div class="pdk-card">
-          <div class="icon">◆</div>
-          <h4>SiEPIC PDK</h4>
-          <p>Environnement principal sous KLayout pour la conception de circuits sur silicium.</p>
-        </div>
-        <div class="pdk-card">
-          <div class="icon">◆</div>
-          <h4>gdsfactory</h4>
-          <p>Génération paramétrique de layouts GDS pour structures de test photoniques.</p>
-        </div>
-        <div class="pdk-card">
-          <div class="icon">◆</div>
-          <h4>OpenLight PDK</h4>
-          <p>Exploration de circuits de transmission intégrant lasers et composants actifs.</p>
-        </div>
-        <div class="pdk-card">
-          <div class="icon">◆</div>
-          <h4>Lumerical Suite</h4>
-          <p>FDTD, MODE et INTERCONNECT pour la simulation passive et système.</p>
-        </div>
-        <div class="pdk-card">
-          <div class="icon">◆</div>
-          <h4>ANT NanoSOI</h4>
-          <p>Procédé de fabrication MPW utilisé pour la validation expérimentale des designs.</p>
-        </div>
-        <div class="pdk-card">
-          <div class="icon">◆</div>
-          <h4>Python / Data</h4>
-          <p>Traitement de données de mesure, extraction de pics, figures publication IEEE.</p>
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Publications</h2></div>
+    <div class="proj">
+      <div class="proj-card reveal">
+        <div class="proj-kicker">Publication · Micromachines (2025) · co-author</div>
+        <h3>Pseudo-vertical GaN-on-Si MOSFET</h3>
+        <p>Study of pseudo-vertical MOSFETs on GaN-on-Si for power electronics: process integration and characterization, in continuity with the VertiGo project.</p>
+        <div class="params">
+          <span class="param"><b>Platform</b> GaN-on-Si</span>
+          <span class="param"><b>Device</b> Pseudo-vertical MOSFET</span>
+          <span class="param"><b>Materials</b> III-V</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ CONNECT ============ -->
-  <section id="connect">
-    <div class="wrap connect-grid">
-      <div>
-        <div class="eyebrow">Connect</div>
-        <h2 style="font-family:var(--font-display); font-size:clamp(1.5rem,2.6vw,2rem); margin:0 0 24px; font-weight:700;">
-          Discutons photonique ou nanofab.
-        </h2>
-        <ul class="connect-list">
-          <li><a href="mailto:contact@example.com">Email <span class="arrow">→</span></a></li>
-          <li><a href="https://github.com/Riadh-BEN-ABBES" target="_blank" rel="noopener">GitHub <span class="arrow">→</span></a></li>
-          <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn <span class="arrow">→</span></a></li>
-        </ul>
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">06</span><h2>Education</h2></div>
+    <div class="edu">
+      <div class="edu-card reveal">
+        <div class="yr">Master 2 · 2021</div>
+        <h3>Microelectronics, semiconductor specialization</h3>
+        <p>Polytech Tours / Université de Tours</p>
       </div>
-      <div class="location-card">
-        <div class="eyebrow" style="margin-bottom:14px;">Basé à</div>
-        <p><strong style="color:var(--text)">Paris, Île-de-France</strong></p>
-        <p>Institut des NanoSciences de Paris (INSP)<br>Sorbonne Université — Jussieu</p>
-        <p style="margin-top:16px; color:var(--text-faint); font-size:13px;">Ouvert aux opportunités process &amp; photonic design engineer.</p>
+      <div class="edu-card reveal">
+        <div class="yr">Certification · Dec 2025</div>
+        <h3>Silicon Photonics Design, Fabrication &amp; Data Analysis</h3>
+        <p>UBCx (University of British Columbia)</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</main>
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box reveal">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Let's talk process &amp; photonics</h2>
+      <p>Open to conversations about nanofabrication, process integration and photonic circuit design.</p>
+      <div class="contact-links">
+        <a class="clink" href="mailto:your.email@example.com">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="clink" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 17v-7"/></svg>
+          LinkedIn
+        </a>
+        <a class="clink" href="https://github.com/riadh-ben-abbes" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.9 2.6 5.9 2.9 5.9 2.9a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.5 9.3c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <div class="wrap footer-row">
-    <span>© 2026 Riadh Ben Abbes</span>
-    <span>Construit avec HTML/CSS — hébergé sur GitHub Pages</span>
+  <div class="wrap foot-in">
+    <span>© <span id="yr"></span> Riadh Ben Abbes</span>
+    <span class="mono">Nanofabrication · Process integration · Integrated photonics</span>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const prog = document.getElementById('prog');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // ---- demux schematic customization window ----
+  const circuit = document.querySelector('.circuit');
+  const svgEl = circuit.querySelector('svg');
+  const panel = document.getElementById('dxPanel');
+  const $ = id => document.getElementById(id);
+  const setV = (p,v) => circuit.style.setProperty(p,v);
+  const wgs = () => circuit.querySelectorAll('.wg');
+  const fontMap = { mono:'"IBM Plex Mono",monospace', grotesk:'"Manrope",system-ui,sans-serif', sans:'"Manrope",system-ui,sans-serif', serif:'Georgia,serif' };
+  const bgMap = { transparent:'transparent', dark:'#000000', light:'#ffffff' };
+  const dashMap = { solid:'', dash:'7 5', dot:'1 5' };
+
+  $('dxOpen').addEventListener('click', () => panel.classList.add('open'));
+  $('dxClose').addEventListener('click', () => panel.classList.remove('open'));
+
+  $('cLw').addEventListener('input', e => { setV('--dx-lw', e.target.value); $('vLw').textContent = e.target.value; });
+  $('cFs').addEventListener('input', e => { setV('--dx-fs', e.target.value+'px'); $('vFs').textContent = e.target.value+' px'; });
+  $('cGlow').addEventListener('input', e => { setV('--dx-glow', e.target.value+'px'); $('vGlow').textContent = e.target.value+' px'; });
+  $('cScale').addEventListener('input', e => { setV('--dx-scale', e.target.value); $('vScale').textContent = Math.round(e.target.value*100)+' %'; });
+  $('cBold').addEventListener('change', e => setV('--dx-weight', e.target.checked ? '600' : '400'));
+  $('cAcc').addEventListener('input', e => setV('--dx-accent', e.target.value));
+  $('cTxt').addEventListener('input', e => setV('--dx-txt', e.target.value));
+  $('cFont').addEventListener('change', e => setV('--dx-font', fontMap[e.target.value]));
+  $('cBg').addEventListener('change', e => setV('--dx-bg', bgMap[e.target.value]));
+  $('cLine').addEventListener('change', e => { const d = dashMap[e.target.value]; wgs().forEach(p => p.style.strokeDasharray = d); });
+
+  $('cFlow').addEventListener('change', e => circuit.classList.toggle('no-flow', !e.target.checked));
+  $('cSpeed').addEventListener('input', e => { setV('--dx-flow-speed', ((11 - e.target.value) * 0.6).toFixed(2) + 's'); $('vSpeed').textContent = e.target.value; });
+  $('cPulse').addEventListener('input', e => { setV('--dx-flow-w', e.target.value); $('vPulse').textContent = e.target.value; });
+  $('cDensity').addEventListener('input', e => {
+    const period = Math.round(400 - e.target.value * 30);
+    setV('--dx-flow-period', period);
+    setV('--dx-flow-pulse', Math.max(6, Math.round(period * 0.08)));
+    $('vDensity').textContent = e.target.value;
+  });
+  $('cFlowCol').addEventListener('input', e => setV('--dx-flow-color', e.target.value));
+
+  function setWl(ch, val){
+    circuit.querySelectorAll('.wl[data-ch="'+ch+'"]').forEach(t => t.textContent = val);
+    const cap = $('capWl'+ch); if (cap) cap.textContent = val;
+  }
+  [1,2,3,4].forEach(k => $('cWl'+k).addEventListener('input', e => setWl(k, e.target.value)));
+  $('cDl').addEventListener('input', e => $('lgDl').textContent = e.target.value);
+  $('cDl2').addEventListener('input', e => $('lgDl2').textContent = e.target.value);
+  $('cLc').addEventListener('input', e => {
+    const v = e.target.value.trim();
+    $('lgLc').textContent = v ? v+' µm' : 'n/a';
+    $('lblLc').textContent = v ? 'Lc '+v+' µm' : 'Lc';
+  });
+  $('cGap').addEventListener('input', e => { const v = e.target.value.trim(); $('lgGap').textContent = v ? v+' nm' : 'n/a'; });
+  $('cLaser').addEventListener('input', e => $('lblLaser').textContent = e.target.value);
+  [1,2,3,4].forEach(k => $('cC'+k).addEventListener('input', e => setV('--c'+k, e.target.value)));
+  $('cMono').addEventListener('change', e => circuit.classList.toggle('mono', e.target.checked));
+
+  const hideMap = { cShowLaser:'hide-laser', cShowRuler:'hide-ruler', cShowTaper:'hide-tapers',
+    cShowPhase:'hide-phase', cShowDelay:'hide-delay', cShowBdc:'hide-bdc', cShowLc:'hide-lc', cShowCh:'hide-ch' };
+  Object.keys(hideMap).forEach(id => $(id).addEventListener('change', e => circuit.classList.toggle(hideMap[id], !e.target.checked)));
+
+  const EXP_PROPS = ['fill','stroke','stroke-width','stroke-dasharray','stroke-dashoffset','stroke-linecap','stroke-linejoin','opacity','font-family','font-size','font-weight','text-anchor','filter'];
+  function inlineStyles(src, dst){
+    const cs = getComputedStyle(src);
+    let s = '';
+    EXP_PROPS.forEach(p => { const v = cs.getPropertyValue(p); if (v && v !== 'none' || p === 'fill' || p === 'stroke') s += p + ':' + v + ';'; });
+    dst.setAttribute('style', s);
+    const a = src.children, b = dst.children;
+    for (let i = 0; i < a.length; i++) inlineStyles(a[i], b[i]);
+  }
+  function buildStyledSvg(){
+    const clone = svgEl.cloneNode(true);
+    inlineStyles(svgEl, clone);
+    clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    clone.setAttribute('width', 1240); clone.setAttribute('height', 400);
+    clone.style.width = '1240px'; clone.style.height = '400px';
+    const bg = getComputedStyle(svgEl).backgroundColor;
+    if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent'){
+      const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r.setAttribute('x',0); r.setAttribute('y',0); r.setAttribute('width',1240); r.setAttribute('height',400); r.setAttribute('fill',bg);
+      clone.insertBefore(r, clone.firstChild);
+    }
+    return clone;
+  }
+  function download(url, name){ const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+  $('btnSvg').addEventListener('click', () => {
+    try{
+      const str = new XMLSerializer().serializeToString(buildStyledSvg());
+      const blob = new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n' + str], {type:'image/svg+xml'});
+      const url = URL.createObjectURL(blob); download(url, 'demux_cwdm.svg'); setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    }catch(err){ console.error(err); }
+  });
+  $('btnPng').addEventListener('click', () => {
+    try{
+      const str = new XMLSerializer().serializeToString(buildStyledSvg());
+      const url = URL.createObjectURL(new Blob([str], {type:'image/svg+xml'}));
+      const img = new Image();
+      img.onload = () => {
+        const scale = 2, cv = document.createElement('canvas');
+        cv.width = 1240*scale; cv.height = 400*scale;
+        const ctx = cv.getContext('2d'); ctx.scale(scale, scale); ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+        cv.toBlob(b => { const u = URL.createObjectURL(b); download(u, 'demux_cwdm.png'); setTimeout(()=>URL.revokeObjectURL(u), 4000); }, 'image/png');
+      };
+      img.onerror = e => console.error('png export failed', e);
+      img.src = url;
+    }catch(err){ console.error(err); }
+  });
+
+  $('dxReset').addEventListener('click', () => {
+    ['--dx-accent','--dx-txt','--dx-lw','--dx-fs','--dx-font','--dx-bg','--dx-scale','--dx-glow','--dx-weight',
+     '--c1','--c2','--c3','--c4','--dx-flow-color','--dx-flow-w','--dx-flow-pulse','--dx-flow-period','--dx-flow-speed']
+      .forEach(v => circuit.style.removeProperty(v));
+    circuit.classList.remove('no-flow','mono','hide-laser','hide-ruler','hide-tapers','hide-phase','hide-delay','hide-bdc','hide-lc','hide-ch');
+    wgs().forEach(p => p.style.strokeDasharray = '');
+    $('cLw').value=1.6; $('vLw').textContent='1.6';
+    $('cFs').value=11; $('vFs').textContent='11 px';
+    $('cGlow').value=4; $('vGlow').textContent='4 px';
+    $('cScale').value=1; $('vScale').textContent='100 %';
+    $('cBold').checked=false; $('cAcc').value='#7b8bff'; $('cTxt').value='#b9b9c8';
+    $('cFont').value='mono'; $('cBg').value='transparent'; $('cLine').value='solid';
+    $('cFlow').checked=true; $('cSpeed').value=7; $('vSpeed').textContent='7';
+    $('cPulse').value=2.4; $('vPulse').textContent='2.4'; $('cDensity').value=4; $('vDensity').textContent='4'; $('cFlowCol').value='#aab4ff';
+    $('cWl1').value=1553; $('cWl2').value=1555; $('cWl3').value=1557; $('cWl4').value=1559;
+    setWl(1,'1553'); setWl(2,'1555'); setWl(3,'1557'); setWl(4,'1559');
+    $('cDl').value=71.5; $('lgDl').textContent='71.5'; $('cDl2').value=143; $('lgDl2').textContent='143';
+    $('cLc').value='50.7'; $('lgLc').textContent='50.7 µm'; $('lblLc').textContent='Lc';
+    $('cGap').value='200'; $('lgGap').textContent='200 nm';
+    $('cLaser').value='1550 nm laser'; $('lblLaser').textContent='1550 nm laser';
+    $('cC1').value='#ff5a4e'; $('cC2').value='#3fb6f2'; $('cC3').value='#45d06e'; $('cC4').value='#ffc23d';
+    $('cMono').checked=false;
+    Object.keys(hideMap).forEach(id => $(id).checked=true);
+    $('cShowPhase').checked=false; circuit.classList.add('hide-phase');   // no phase shifter on this chip
+  });
+</script>
 </body>
 </html>
