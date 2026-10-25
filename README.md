@@ -210,6 +210,10 @@ After an initial wafer clean in piranha solution (3:1 H₂SO₄:H₂O₂) for 15
 
 After exposure and development in a tetramethylammonium hydroxide (TMAH) solution, the devices were inspected optically for residues and defects. The chips were then mounted on a 4" handle wafer and etched by an anisotropic chlorine-based ICP-RIE process, after qualification of the etch rate. The resist was removed using a 10:1 buffered oxide etch, and the devices were inspected by scanning electron microscopy (SEM) to verify patterning and etch quality. A 2.2 µm oxide cladding was deposited by plasma-enhanced chemical vapor deposition (PECVD) based on tetraethyl orthosilicate (TEOS) at 300 °C. Reflectometry measurements were performed throughout the process to verify the device layer, buffer oxide and cladding thicknesses before delivery.
 
+## License
+
+Code in this folder is released under the [MIT License](LICENSE).
+
 ## Author
 
 Riadh Ben Abbes, Institut des NanoSciences de Paris (INSP), Sorbonne Université / CNRS.
