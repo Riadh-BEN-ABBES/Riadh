@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SOI 1×4 cascaded-MZI wavelength demultiplexer at 1550 nm · Riadh Ben Abbes</title>
+<meta name="description" content="Design, simulation, GDS layout, fabrication and measurement of a 1x4 cascaded-MZI CWDM demultiplexer on SOI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--substrate:#000;--raised:#0B0B12;--raised-2:#13131D;--line:#26263A;--accent:#7B8BFF;
+        --accent-hi:#AAB4FF;--coral:#FF6A55;--ink:#FFF;--ink-muted:#B9B9C8;--ink-faint:#70708A;
+        color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);
+        padding-bottom:env(safe-area-inset-bottom,0px);}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+  body{margin:0;background:var(--substrate);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;
+        line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none} a:hover{color:var(--accent-hi)}
+  header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(0,0,0,.85);
+          backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;
+               background:rgba(0,0,0,.85)}
+  .bar{max-width:1000px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;
+        align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{color:var(--ink);font-weight:700} .brand i{display:inline-block;width:8px;height:8px;border-radius:2px;
+        background:var(--accent);box-shadow:0 0 10px var(--accent);margin-right:10px;vertical-align:middle}
+  .btn{border:1px solid var(--line);border-radius:8px;padding:9px 16px;font-size:.88rem;color:var(--ink);
+        display:inline-flex;gap:8px;align-items:center}
+  .btn:hover{border-color:var(--accent);color:var(--ink)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#05060F;font-weight:600}
+  main{max-width:1000px;margin:0 auto;padding:46px 22px 80px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--accent);letter-spacing:.06em}
+  h1{font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.12;margin:12px 0 22px;font-weight:800}
+  h2{font-size:1.6rem;margin:56px 0 16px;padding-top:18px;border-top:1px solid var(--line);font-weight:700}
+  h3{font-size:1.15rem;margin:30px 0 10px;font-weight:700;color:var(--ink)}
+  p,li{color:var(--ink-muted)} strong{color:var(--ink)}
+  p>em:only-child{display:block;font-size:.9rem;color:var(--ink-faint);margin-top:-6px}
+  img{max-width:100%;height:auto;border-radius:6px;vertical-align:top}
+  p:has(> img){display:flex;gap:2%;flex-wrap:wrap;justify-content:center;background:var(--raised);
+        border:1px solid var(--line);border-radius:10px;padding:14px}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--raised-2);padding:2px 6px;border-radius:5px;color:var(--ink)}
+  .tbl{overflow-x:auto;margin:14px 0 18px;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;font-size:.9rem}
+  th,td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+  th{background:var(--raised-2);color:var(--ink);font-weight:600} td{color:var(--ink-muted)}
+  tr:last-child td{border-bottom:none}
+  math[display="block"]{margin:18px 0;font-size:1.12em;overflow-x:auto;max-width:100%}
+  math{color:var(--ink)}
+  ol li{margin:6px 0}
+  footer{border-top:1px solid var(--line);color:var(--ink-faint);font-size:.85rem}
+  footer .bar{padding:22px}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <a class="brand" href="../"><i></i>Riadh Ben Abbes</a>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <a class="btn" href="../#projects">← Portfolio</a>
+    <a class="btn primary" href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux" target="_blank" rel="noopener">Code &amp; data ↗</a>
+  </div>
+</div></header>
+<main>
+  <div class="eyebrow">Integrated photonics · design → fabrication → measurement</div>
+  <h1>SOI 1×4 cascaded-MZI wavelength demultiplexer at 1550 nm</h1>
+<p>We present a four-channel, silicon-photonic wavelength demultiplexer
+made using a two-stage cascade of Mach–Zehnder interferometers with
+broadband directional couplers, on a 2 nm channel grid from 1553 to 1559
+nm. The fabricated device shows passbands with a 3-dB bandwidth of 1.6
+to 1.8 nm, extinction ratios of 23 to 35 dB and a normalized insertion
+loss of 1.5 to 3.3 dB. It was fabricated through the Applied Nanotools
+NanoSOI MPW process on 500 × 220 nm strip waveguides and measured at UBC
+within the UBCx Phot1x course [5].</p>
+<img loading="lazy" src="figures/demux_animation.svg" width="100%" alt="Animated schematic of the 1x4 cascaded-MZI demultiplexer">
+
+<p><em>Light of the four channels is split by MZI 1 (2ΔL = 143 µm), then
+by MZI 2A and 2B (ΔL = 71.5 µm), each built with broadband directional
+couplers (bdc); unused coupler ports end in tapers.</em></p>
+<p>Every figure and number below is regenerated from the raw data by the
+analysis scripts available <a
+href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux">on
+GitHub</a>.</p>
+<h2 id="i-introduction">I. Introduction</h2>
+<p>Wavelength division multiplexing (WDM) carries several optical
+channels on a single fiber and separates them again at the receiver
+(Fig. 1). On-chip wavelength demultiplexers are therefore key building
+blocks of silicon photonic transceivers, and silicon-on-insulator (SOI),
+with its high index contrast and CMOS compatibility, is a natural
+platform for them [2].</p>
+<img loading="lazy" src="figures/fig01_cwdm_concept.png" width="100%">
+
+<p><em>Fig. 1. Coarse WDM link. This work implements the on-chip 1×4
+demultiplexer for four channels on a 2 nm grid.</em></p>
+<p>Cascaded Mach–Zehnder interferometers (MZIs) are well established for
+on-chip wavelength routing [3] and provide a passive alternative to
+microring filters [4], which generally require active resonance tuning.
+Their performance depends on the splitting ratio of the couplers at each
+stage: conventional directional couplers are strongly wavelength
+dependent, whereas broadband directional couplers (BDCs) keep a near
+50/50 split over a wide band through an asymmetric phase-control section
+[1]. Here, four channels at 1553, 1555, 1557 and 1559 nm are targeted,
+using the SiEPIC PDK in KLayout and Lumerical INTERCONNECT for circuit
+simulation [7].</p>
+<h2 id="ii-theoretical-background">II. Theoretical background</h2>
+<h3 id="a-choice-of-the-path-length-differences">A. Choice of the
+path-length differences</h3>
+<p>Strip waveguides of 500 × 220 nm support a single quasi-TE mode at
+1550 nm. The free spectral range of an MZI with path-length difference
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><mi>L</mi></mrow><annotation encoding="application/x-tex">\Delta L</annotation></semantics></math>
+is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">F</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">R</mi></mrow><mo>=</mo><mfrac><msubsup><mi>λ</mi><mn>0</mn><mn>2</mn></msubsup><mrow><msub><mi>n</mi><mi>g</mi></msub><mspace width="0.167em"></mspace><mi>Δ</mi><mi>L</mi></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>n</mi><mi>g</mi></msub><mo>≈</mo><mn>4.2</mn></mrow><annotation encoding="application/x-tex">\mathrm{FSR} = \frac{\lambda_0^2}{n_g\,\Delta L}, \qquad n_g \approx 4.2</annotation></semantics></math></p>
+<p>A binary tree that separates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">N = 2^k</annotation></semantics></math>
+channels spaced by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>λ</mi><mrow><mi>c</mi><mi>h</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Delta\lambda_{ch}</annotation></semantics></math>
+needs
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+stages. Stage
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+must send channels that are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>Δ</mi><msub><mi>λ</mi><mrow><mi>c</mi><mi>h</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2^{i-1}\Delta\lambda_{ch}</annotation></semantics></math>
+apart to opposite ports, i.e. half a period apart, which sets</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi mathvariant="normal">F</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">R</mi></mrow><mi>i</mi></msub><mo>=</mo><msup><mn>2</mn><mi>i</mi></msup><mspace width="0.167em"></mspace><mi>Δ</mi><msub><mi>λ</mi><mrow><mi>c</mi><mi>h</mi></mrow></msub><mspace width="1.0em"></mspace><mo>⇒</mo><mspace width="1.0em"></mspace><mi>Δ</mi><msub><mi>L</mi><mi>i</mi></msub><mo>=</mo><mfrac><msubsup><mi>λ</mi><mn>0</mn><mn>2</mn></msubsup><mrow><msub><mi>n</mi><mi>g</mi></msub><mspace width="0.167em"></mspace><msup><mn>2</mn><mi>i</mi></msup><mspace width="0.167em"></mspace><mi>Δ</mi><msub><mi>λ</mi><mrow><mi>c</mi><mi>h</mi></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\mathrm{FSR}_i = 2^i\,\Delta\lambda_{ch} \quad\Rightarrow\quad \Delta L_i = \frac{\lambda_0^2}{n_g\,2^i\,\Delta\lambda_{ch}}</annotation></semantics></math></p>
+<p>For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">N = 4</annotation></semantics></math>
+channels
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k = 2</annotation></semantics></math>)
+on a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>λ</mi><mrow><mi>c</mi><mi>h</mi></mrow></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\Delta\lambda_{ch} = 2</annotation></semantics></math>
+nm grid at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mn>0</mn></msub><mo>=</mo><mn>1550</mn></mrow><annotation encoding="application/x-tex">\lambda_0 = 1550</annotation></semantics></math>
+nm [2]:</p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Channels separated</th>
+<th>FSR</th>
+<th>ΔL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2 nm apart (λ₁, λ₃ / λ₂, λ₄)</td>
+<td>4 nm</td>
+<td>143 µm</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>4 nm apart (λ₁ / λ₃ and λ₂ / λ₄)</td>
+<td>8 nm</td>
+<td>71.5 µm</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="b-choice-of-the-directional-coupler">B. Choice of the
+directional coupler</h3>
+<p>The extinction of each MZI depends on its two couplers splitting the
+light 50/50 at every channel wavelength. A conventional directional
+coupler is strongly wavelength dependent, so its splitting ratio drifts
+away from 50/50 across the band. A broadband directional coupler (BDC)
+was therefore chosen: in its asymmetric section, two waveguides of
+different widths introduce a controlled phase mismatch that compensates
+for the wavelength dependence of the coupling coefficient, giving a
+quasi-constant 50/50 splitting ratio over more than 100 nm [1].</p>
+<h2 id="iii-broadband-directional-coupler">III. Broadband directional
+coupler</h2>
+<p>The coupler is the <code>ebeam_bdc_te1550</code> cell of the SiEPIC
+PDK [1]. Read from the GDS (Fig. 2a, b), it consists of two 500 nm
+waveguides separated by a 200 nm gap over a 50.7 µm coupling region,
+which contains a 2.5 µm asymmetric phase-control section where the
+widths become 600 and 400 nm. A stand-alone BDC test structure was
+measured against an on-chip reference waveguide (Fig. 2c).</p>
+<p><img loading="lazy" src="figures/fig02_bdc_layout.png" width="49%">
+<img loading="lazy" src="figures/fig02c_bdc_splitting_ratio.png" width="48%"></p>
+<p><em>Fig. 2. Broadband directional coupler. Geometry of the
+<code>ebeam_bdc_te1550</code> cell extracted from the layout: (a) full
+coupler, the shaded band marks the phase-control section; (b)
+phase-control section at true scale. (c) Measured apparent splitting
+ratio P₁/(P₁+P₂), which includes the response of the two output grating
+couplers.</em></p>
+<p>The split is <strong>50.0 / 50.0 % at 1550 nm</strong>, with no
+measurable excess loss (P₁ + P₂ within −0.01 to +0.25 dB of the
+reference). The apparent ratio drifts across the band, but the two
+output grating couplers have envelopes offset by 2.3 nm, which alone
+produces a drift of the same order: this structure cannot isolate the
+intrinsic wavelength dependence of the BDC.</p>
+<h2 id="iv-demultiplexer-architecture">IV. Demultiplexer
+architecture</h2>
+<p>The demultiplexer is a two-stage MZI binary tree (Fig. 3). Stage 1
+(MZI 1, ΔL₁ = 143 µm) separates {λ₁, λ₃} from {λ₂, λ₄}; each stage-2 MZI
+(MZI 2A and 2B, ΔL₂ = 71.5 µm) then separates the remaining pair.</p>
+<p><img loading="lazy" src="figures/fig05a_architecture_routing.png" width="49%">
+<img loading="lazy" src="figures/fig05b_architecture_schematic.png" width="49%"></p>
+<p><em>Fig. 3. Demultiplexer architecture: wavelength routing through
+the two-stage MZI tree (left) and circuit schematic with path-length
+differences and BDCs (right).</em></p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Stage 1</th>
+<th>Stage 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Path-length difference ΔL</td>
+<td>143 µm</td>
+<td>71.5 µm</td>
+</tr>
+<tr class="even">
+<td>Target FSR</td>
+<td>≈ 4 nm</td>
+<td>≈ 8 nm</td>
+</tr>
+<tr class="odd">
+<td>Coupler</td>
+<td><code>ebeam_bdc_te1550</code></td>
+<td><code>ebeam_bdc_te1550</code></td>
+</tr>
+<tr class="even">
+<td>Waveguide</td>
+<td>500 × 220 nm strip</td>
+<td>500 × 220 nm strip</td>
+</tr>
+</tbody>
+</table></div>
+<p>Stand-alone MZIs of each stage were measured to check the delay lines
+(Fig. 4).</p>
+<p><img loading="lazy" src="figures/fig06_mzi_stage1.png" width="49%">
+<img loading="lazy" src="figures/fig07_mzi_stage2.png" width="49%"></p>
+<p><em>Fig. 4. Stand-alone MZI test structures: stage 1 (left) and stage
+2 (right).</em></p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th>Test structure</th>
+<th>Measured FSR (port 1 / port 2)</th>
+<th>Design</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MZI stage 1 (ΔL = 143 µm)</td>
+<td>3.94 / 3.95 nm</td>
+<td>≈ 4 nm</td>
+</tr>
+<tr class="even">
+<td>MZI stage 2 (ΔL = 71.5 µm)</td>
+<td>7.97 / 7.94 nm</td>
+<td>≈ 8 nm</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="v-gds-layout">V. GDS layout</h2>
+<p>The layout was generated with the SiEPIC PDK in KLayout. Two layouts
+were fabricated, both available in <a
+href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux/layout"><code>layout/</code></a>.
+The 605 × 410 µm cell contains the 1×4 demultiplexer together with
+stand-alone stage-1 and stage-2 MZIs and a BDC test structure, all
+accessed through focusing grating couplers on a 127 µm pitch (Fig.
+5).</p>
+<img loading="lazy" src="figures/fig06_layout_klayout.png" width="100%">
+
+<p><em>Fig. 5. KLayout view of the GDS cell: 1×4 demultiplexer (left),
+stand-alone stage-1 MZI, BDC and stage-2 MZI test structures
+(right).</em></p>
+<p>The path-length differences extracted from the waveguide lengths
+stored in the GDS match the design:</p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th>Structure</th>
+<th>Arm lengths</th>
+<th>ΔL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Demultiplexer, MZI 1</td>
+<td>183.0 / 40.0 µm</td>
+<td>143.0 µm</td>
+</tr>
+<tr class="even">
+<td>Demultiplexer, MZI 2A</td>
+<td>111.5 / 40.0 µm</td>
+<td>71.5 µm</td>
+</tr>
+<tr class="odd">
+<td>Demultiplexer, MZI 2B</td>
+<td>111.5 / 40.0 µm</td>
+<td>71.5 µm</td>
+</tr>
+<tr class="even">
+<td>Test MZI, stage 1</td>
+<td>183.0 / 40.0 µm</td>
+<td>143.0 µm</td>
+</tr>
+<tr class="odd">
+<td>Test MZI, stage 2</td>
+<td>111.5 / 40.0 µm</td>
+<td>71.5 µm</td>
+</tr>
+</tbody>
+</table></div>
+<p>MZI 2A and 2B have strictly identical delay lines, with no phase
+offset between them, which is consistent with the non-uniform channel
+spacing discussed in Section VII. One output of MZI 2A ends in an
+<code>ebeam_terminator_te1550</code> on purpose: the fiber array of the
+test setup gives access to one input and three outputs per device, so
+this cell routes three outputs.</p>
+<p>The second layout, <a
+href="layout/EBeam_RiadhCWDM_otp1.gds"><code>EBeam_RiadhCWDM_otp1.gds</code></a>,
+contains an identical copy of the demultiplexer in which only that
+remaining output is routed to a grating coupler (Fig. 6).</p>
+<img loading="lazy" src="figures/fig06b_layout_duplicate_klayout.png" width="100%">
+
+<p><em>Fig. 6. KLayout view of the duplicate demultiplexer in the second
+layout: only the output of MZI 2A that is terminated in the first layout
+is routed (top grating coupler).</em></p>
+<h2 id="vi-device-fabrication">VI. Device fabrication</h2>
+<p>The chip was fabricated through the Applied Nanotools NanoSOI MPW
+process [6]: 100 keV electron-beam lithography on 220 nm SOI with a 2 µm
+buried oxide, chlorine ICP-RIE etch and a 2.2 µm PECVD oxide cladding.
+The full process is given in <a
+href="#appendix-b-fabrication-process">Appendix B</a>.</p>
+<img loading="lazy" src="figures/fig08b_micrograph_annotated.jpg" width="100%">
+
+<p><em>Fig. 7. Optical micrograph of the fabricated chip.</em></p>
+<p>On this device, three of the four outputs are routed to grating
+couplers and one port of MZI 2A ends in a terminator, as designed
+(Section V); the fourth output is accessed on the duplicate
+demultiplexer of the second layout.</p>
+<h2 id="vii-lumerical-interconnect-simulation">VII. Lumerical
+INTERCONNECT simulation</h2>
+<p>The circuit was simulated in Lumerical INTERCONNECT [7] with the
+<code>ebeam_bdc_te1550</code> compact model, from 1499 to 1601 nm (5000
+points, about 20 pm step).</p>
+<img loading="lazy" src="figures/fig09_sim_transmission.png" width="100%">
+
+<p><em>Fig. 8. Simulated transmission of the four outputs, including the
+grating-coupler response: (a) full span, (b) channel window. Dotted
+lines mark the design channels.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th>Channel</th>
+<th>Target</th>
+<th>Simulated peak</th>
+<th>3-dB BW</th>
+<th>Normalized IL</th>
+<th>ER</th>
+<th>Isolation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ch. 1 (Output 4)</td>
+<td>1553 nm</td>
+<td>1553.84 nm</td>
+<td>1.79 nm</td>
+<td>0.76 dB</td>
+<td>50.2 dB</td>
+<td>7.8 dB</td>
+</tr>
+<tr class="even">
+<td>Ch. 2 (Output 1)</td>
+<td>1555 nm</td>
+<td>1555.32 nm</td>
+<td>1.75 nm</td>
+<td>1.22 dB</td>
+<td>60.4 dB</td>
+<td>6.3 dB</td>
+</tr>
+<tr class="odd">
+<td>Ch. 3 (Output 3)</td>
+<td>1557 nm</td>
+<td>1557.96 nm</td>
+<td>1.79 nm</td>
+<td>0.70 dB</td>
+<td>50.1 dB</td>
+<td>9.4 dB</td>
+</tr>
+<tr class="even">
+<td>Ch. 4 (Output 2)</td>
+<td>1559 nm</td>
+<td>1559.36 nm</td>
+<td>1.77 nm</td>
+<td>1.12 dB</td>
+<td>54.6 dB</td>
+<td>6.7 dB</td>
+</tr>
+</tbody>
+</table></div>
+<p>ER is the peak-to-null extinction of each output within ±4 nm of its
+peak; isolation is the margin between an output and the strongest other
+output at its peak, which measures the channel separation.</p>
+<p>The simulated channel spacing is <strong>1.48 / 2.64 / 1.40
+nm</strong> instead of a uniform 2 nm, and each output shows a secondary
+passband about 4 dB below the main one. The path-length differences set
+the correct FSR, but the absolute phase of each MZI is not trimmed onto
+the channel grid (in particular the quarter-period offset needed between
+MZI 2A and 2B). An idealized analytical model of the same tree
+reproduces this behaviour and recovers a uniform 2 nm grid with more
+than 20 dB isolation once the phases are aligned.</p>
+<h2 id="viii-experimental-characterization">VIII. Experimental
+characterization</h2>
+<p>Spectra were recorded with a swept tunable laser from 1475 to 1583 nm
+(8 pm step) and stored as MATLAB files [8]; the setup is described in <a
+href="#appendix-a-measurement-setup">Appendix A</a>. Each output is
+normalized to an on-chip reference waveguide, and the analysis is
+restricted to <strong>1504–1559 nm</strong>, where the reference is at
+least 10 dB above the noise floor.</p>
+<img loading="lazy" src="figures/fig10_meas_transmission.png" width="100%">
+
+<p><em>Fig. 9. Measured normalized transmission of the demultiplexer
+outputs: (a) analysis band; (b) channel window, with the peak wavelength
+and extinction of each output and the spacing between the outputs
+recorded in the same scan. Output numbers and colors follow Fig. 8;
+Outputs 1 to 3 come from the three-output device, Output 4 from the
+duplicate device.</em></p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th>Channel</th>
+<th>Target</th>
+<th>Measured peak</th>
+<th>3-dB BW</th>
+<th>Normalized IL</th>
+<th>ER</th>
+<th>Isolation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ch. 1 (Output 4, duplicate device)</td>
+<td>1553 nm</td>
+<td>1553.58 nm</td>
+<td>1.77 nm</td>
+<td>1.49 dB</td>
+<td>28.8 dB</td>
+<td>n/a</td>
+</tr>
+<tr class="even">
+<td>Ch. 2 (Output 1, MZI 2B)</td>
+<td>1555 nm</td>
+<td>1551.85 nm</td>
+<td>1.66 nm</td>
+<td>3.21 dB</td>
+<td>26.2 dB</td>
+<td>1.2 dB</td>
+</tr>
+<tr class="odd">
+<td>Ch. 3 (Output 3, MZI 2A)</td>
+<td>1557 nm</td>
+<td>1554.27 nm</td>
+<td>1.72 nm</td>
+<td>3.26 dB</td>
+<td>27.0 dB</td>
+<td>13.0 dB</td>
+</tr>
+<tr class="even">
+<td>Ch. 4 (Output 2, MZI 2B)</td>
+<td>1559 nm</td>
+<td>1555.68 nm</td>
+<td>1.70 nm</td>
+<td>1.48 dB</td>
+<td>22.8 dB</td>
+<td>6.0 dB</td>
+</tr>
+</tbody>
+</table></div>
+<p>Outputs 1, 3 and 2, recorded in the same scan, are spaced by 2.42 and
+1.41 nm instead of 2 nm, the same non-uniform pattern as in simulation.
+ER is the peak-to-null extinction of each output within ±4 nm of its
+peak, as in Section VII; it ranges from 23 to 35 dB over the whole
+analysis band. Isolation is the margin between an output and the
+strongest other output at its peak, so it is only defined for Outputs 1
+to 3, recorded in the same scan. The FSR is 7.74–7.90 nm.</p>
+<p><strong>Output assignment.</strong> Two ports of the same stage-2 MZI
+should sum to a clean stage-1 response with a 4 nm period. The two
+outputs recorded on GC2 and GC3 do so (80 % of the fluctuating power at
+the 4 nm period), which confirms that they are the two MZI 2B ports; the
+third output (GC1) is the routed MZI 2A port. Matching the three spectra
+to the simulation gives a common offset of either −3.5 nm or +0.4 nm,
+depending on which simulated port corresponds to GC1. The table and Fig.
+9 use the −3.5 nm hypothesis, which is physically expected for
+waveguides narrower than designed: Outputs 1 to 3 then peak 2.7 to 3.3
+nm below their targets. The port numbering of the INTERCONNECT schematic
+will confirm it.</p>
+<p>Output 4 was recorded on the duplicate demultiplexer of the second
+layout (16 Nov 2025), whose single routed output is the MZI 2A port
+terminated on the first device, so it is assigned to the remaining
+channel by elimination. Its spectrum, however, does not fit this
+assignment: it peaks 0.6 nm above its target instead of about 3 nm
+below, and it does not sum with Output 3 into a clean 4 nm response (56
+% at best, for any relative shift between the two devices). A new
+measurement of this output is needed to confirm it.</p>
+<h2 id="ix-conclusion">IX. Conclusion</h2>
+<p>A four-channel SOI demultiplexer based on a two-stage cascaded MZI
+tree with broadband directional couplers was designed, simulated,
+fabricated and characterized. The stand-alone MZIs reproduce the target
+FSRs (3.94 and 7.95 nm), and the BDC splits 50/50 at 1550 nm without
+measurable excess loss. The demultiplexer outputs show 1.6–1.8 nm
+passbands with 23–35 dB extinction. Simulation and measurement both
+reveal a non-uniform channel spacing, traced to the absolute phase of
+the MZIs not being aligned with the channel grid. Trimming these phases
+is the next design step.</p>
+<h2 id="acknowledgment">Acknowledgment</h2>
+<p>We acknowledge the edX UBCx Phot1x Silicon Photonics Design,
+Fabrication and Data Analysis course, which is supported by the Natural
+Sciences and Engineering Research Council of Canada (NSERC) Silicon
+Electronic-Photonic Integrated Circuits (SiEPIC) Program. The devices
+were fabricated by Cameron Horvath at Applied Nanotools, Inc. Mateo
+Branion-Calles performed the measurements at The University of British
+Columbia. We acknowledge Lumerical Solutions, Inc., MathWorks, Mentor
+Graphics, Python, and KLayout for the design software.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Z. Lu et al., "Broadband silicon photonic directional coupler using
+asymmetric-waveguide based phase control," <em>Opt. Express</em>, vol.
+23, no. 3, pp. 3795–3808, 2015. <a
+href="https://doi.org/10.1364/OE.23.003795">doi:10.1364/OE.23.003795</a></li>
+<li>L. Chrostowski and M. Hochberg, <em>Silicon Photonics Design</em>.
+Cambridge Univ. Press, 2015.</li>
+<li>H. Xu and Y. Shi, "Flat-top CWDM (de)multiplexer based on MZI with
+bent directional couplers," <em>IEEE Photon. Technol. Lett.</em>, vol.
+30, no. 2, pp. 169–172, 2018. <a
+href="https://doi.org/10.1109/LPT.2017.2779489">doi:10.1109/LPT.2017.2779489</a></li>
+<li>W. Bogaerts et al., "Silicon microring resonators," <em>Laser
+Photonics Rev.</em>, vol. 6, no. 1, pp. 47–73, 2012.</li>
+<li>UBCx, <em>PHOT1x – Silicon Photonics Design, Fabrication and Data
+Analysis</em>, edX / University of British Columbia, 2025.</li>
+<li>Applied Nanotools Inc., <em>NanoSOI Multi-Project Wafer (MPW)
+Process Description</em>, Edmonton, Canada, 2023.</li>
+<li>Lumerical Solutions Inc., <em>MODE Solutions, FDTD Solutions and
+INTERCONNECT Documentation</em>, Ansys Inc., 2023.</li>
+<li>MathWorks, <em>MATLAB R2023b Documentation: Curve Fitting Toolbox
+and Signal Processing Toolbox</em>, Natick, MA, USA, 2023.</li>
+</ol>
+<h2 id="appendix-a-measurement-setup">Appendix A: Measurement setup</h2>
+<p>To characterize the devices, a custom-built automated test setup with
+automated control software written in Python was used. An Agilent 81600B
+tunable laser was used as the input source and Agilent 81635A optical
+power sensors as the output detectors. The wavelength was swept from
+1475 to 1583 nm in 8 pm steps. A polarization-maintaining (PM) fiber was
+used to maintain the polarization state of the light and to couple the
+TE polarization into the grating couplers. A polarization-maintaining
+fiber array was used to couple light in and out of the chip.</p>
+<p>Raw spectra are stored as MATLAB files in
+<code>measurement/raw/</code> (<code>testResult.header.wavelength</code>
+in nm, <code>testResult.rows.channel_1</code> to <code>channel_4</code>
+in dBm, one channel per detector).</p>
+<h2 id="appendix-b-fabrication-process">Appendix B: Fabrication
+process</h2>
+<p>The photonic devices were fabricated using the NanoSOI MPW
+fabrication process by Applied Nanotools Inc., which is based on
+direct-write 100 keV electron-beam lithography. Silicon-on-insulator
+wafers of 200 mm diameter, 220 nm device thickness and 2 µm buffer oxide
+thickness are used as the base material. The wafer was pre-diced into 25
+× 25 mm square substrates, and lines were scribed into the substrate
+backsides to facilitate separation into smaller chips once fabrication
+was complete.</p>
+<p>After an initial wafer clean in piranha solution (3:1 H₂SO₄:H₂O₂) for
+15 minutes and a water/IPA rinse, hydrogen silsesquioxane (HSQ) resist
+was spin-coated onto the substrate and heated to evaporate the solvent.
+The devices were patterned using a JEOL JBX-8100FS electron-beam
+instrument at The University of British Columbia. The exposure dose was
+corrected for proximity effects resulting from the backscatter of
+electrons from nearby features, and the shape writing order was
+optimized for efficient patterning and minimal beam drift.</p>
+<p>After exposure and development in a tetramethylammonium hydroxide
+(TMAH) solution, the devices were inspected optically for residues and
+defects. The chips were then mounted on a 4" handle wafer and etched by
+an anisotropic chlorine-based ICP-RIE process, after qualification of
+the etch rate. The resist was removed using a 10:1 buffered oxide etch,
+and the devices were inspected by scanning electron microscopy (SEM) to
+verify patterning and etch quality. A 2.2 µm oxide cladding was
+deposited by plasma-enhanced chemical vapor deposition (PECVD) based on
+tetraethyl orthosilicate (TEOS) at 300 °C. Reflectometry measurements
+were performed throughout the process to verify the device layer, buffer
+oxide and cladding thicknesses before delivery.</p>
+<h2 id="author">Author</h2>
+<p>Riadh Ben Abbes, Institut des NanoSciences de Paris (INSP), Sorbonne
+Université / CNRS.</p>
+
+  <p style="margin-top:48px"><a class="btn primary" href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux" target="_blank" rel="noopener">Code, raw data and analysis scripts on GitHub ↗</a></p>
+</main>
+<footer><div class="bar"><span>© Riadh Ben Abbes</span><a href="../">Back to portfolio</a></div></footer>
+</body>
+</html>
