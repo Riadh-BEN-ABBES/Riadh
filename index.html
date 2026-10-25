@@ -85,7 +85,7 @@
   .circuit{margin-top:56px;position:relative;z-index:1;overflow-x:auto;
     --dx-accent:#E8843C; --dx-txt:#A79C8C; --dx-lw:1.6; --dx-fs:11px; --dx-font:"IBM Plex Mono",monospace;
     --dx-bg:transparent; --dx-scale:1; --dx-glow:4px; --dx-weight:400;
-    --c1:#E8705E; --c2:#7FC98E; --c3:#63B7E0; --c4:#D8CEBE;
+    --c1:#FF5A4E; --c2:#3FB6F2; --c3:#45D06E; --c4:#FFC23D;
     --dx-flow-color:#F6A860; --dx-flow-w:2.4; --dx-flow-pulse:16; --dx-flow-period:256; --dx-flow-speed:2.8s;}
   .circuit-cap{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px;}
   .circuit svg{width:calc(var(--dx-scale,1) * 100%);height:auto;display:block;background:var(--dx-bg,transparent);border-radius:8px;}
@@ -398,7 +398,7 @@
         <div class="proj-kicker">Integrated photonics · design → fabrication → measurement</div>
         <h3>1×4 CWDM MZI demultiplexer on SOI</h3>
         <p>Four-channel demultiplexer on SOI (220 nm): circuit design and simulation (Lumerical INTERCONNECT), GDS layout in KLayout / SiEPIC PDK, then fabrication (ANT NanoSOI MPW) and optical characterization. Cascaded-MZI architecture with broadband directional couplers.</p>
-        <div class="circuit reveal" style="margin-top:22px">
+        <div class="circuit reveal hide-phase" style="margin-top:22px">
       <div class="circuit-cap">
         <span class="eyebrow">1×4 CWDM demux · cascaded MZI · broadband directional couplers (bdc) · SOI</span>
         <span class="lbl mono" style="color:var(--ink-faint)">λ = <span id="capWl1">1553</span> / <span id="capWl2">1555</span> / <span id="capWl3">1557</span> / <span id="capWl4">1559</span> nm</span>
@@ -475,15 +475,15 @@
           <text class="lbl l-s lbl-bdc" x="490" y="150" fill="var(--ink-faint)">bdc</text>
           <text id="lblLc" class="lbl l-s lbl-lc" x="190" y="238" text-anchor="middle" fill="var(--ink-faint)">Lc</text>
           <text class="lbl lbl-hot l-s lbl-phase" x="855" y="242" text-anchor="middle">φ</text>
-          <text class="lbl lbl-ch" x="606" y="114"><tspan class="ch2">λ₂</tspan> <tspan class="ch3">λ₃</tspan></text>
-          <text class="lbl lbl-ch" x="606" y="248"><tspan class="ch1">λ₁</tspan> <tspan class="ch4">λ₄</tspan></text>
+          <text class="lbl lbl-ch" x="606" y="114"><tspan class="ch2">λ₂</tspan> <tspan class="ch4">λ₄</tspan></text>
+          <text class="lbl lbl-ch" x="606" y="248"><tspan class="ch3">λ₃</tspan> <tspan class="ch1">λ₁</tspan></text>
           <text class="lbl" x="1198" y="128"><tspan class="ch2" style="font-weight:600">λ₂</tspan> <tspan class="wl" data-ch="2" fill="var(--dx-txt)">1555</tspan></text>
-          <text class="lbl" x="1198" y="216"><tspan class="ch3" style="font-weight:600">λ₃</tspan> <tspan class="wl" data-ch="3" fill="var(--dx-txt)">1557</tspan></text>
-          <text class="lbl" x="1198" y="260"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wl" data-ch="1" fill="var(--dx-txt)">1553</tspan></text>
-          <text class="lbl" x="1198" y="348"><tspan class="ch4" style="font-weight:600">λ₄</tspan> <tspan class="wl" data-ch="4" fill="var(--dx-txt)">1559</tspan></text>
+          <text class="lbl" x="1198" y="216"><tspan class="ch4" style="font-weight:600">λ₄</tspan> <tspan class="wl" data-ch="4" fill="var(--dx-txt)">1559</tspan></text>
+          <text class="lbl" x="1198" y="260"><tspan class="ch3" style="font-weight:600">λ₃</tspan> <tspan class="wl" data-ch="3" fill="var(--dx-txt)">1557</tspan></text>
+          <text class="lbl" x="1198" y="348"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wl" data-ch="1" fill="var(--dx-txt)">1553</tspan></text>
         </g>
       </svg>
-      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler · Lc = <span id="lgLc">n/a</span> · gap = <span id="lgGap">n/a</span> · φ = phase shifter · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
+      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler · Lc = <span id="lgLc">50.7 µm</span> · gap = <span id="lgGap">200 nm</span> · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
       <button class="dx-open" id="dxOpen" aria-haspopup="dialog">⚙ Customize schematic</button>
       <div class="dx-panel" id="dxPanel" role="dialog" aria-label="Customize the demux schematic">
         <div class="dx-bar"><h4><span class="dx-dot"></span>Customize schematic</h4><button class="dx-close" id="dxClose" aria-label="Close">×</button></div>
@@ -509,16 +509,16 @@
           <details class="dx-sec"><summary>Content (values)</summary><div class="dx-inner">
           <div class="dx-grid"><div class="dx-row"><label>λ₁ (nm)</label><input type="number" id="cWl1" value="1553" step="1"></div><div class="dx-row"><label>λ₂ (nm)</label><input type="number" id="cWl2" value="1555" step="1"></div><div class="dx-row"><label>λ₃ (nm)</label><input type="number" id="cWl3" value="1557" step="1"></div><div class="dx-row"><label>λ₄ (nm)</label><input type="number" id="cWl4" value="1559" step="1"></div></div>
           <div class="dx-grid"><div class="dx-row"><label>ΔL (µm)</label><input type="number" id="cDl" value="71.5" step="0.5"></div><div class="dx-row"><label>2ΔL (µm)</label><input type="number" id="cDl2" value="143" step="0.5"></div></div>
-          <div class="dx-grid"><div class="dx-row"><label>Lc (µm)</label><input type="number" id="cLc" value="" step="0.1"></div><div class="dx-row"><label>gap (nm)</label><input type="number" id="cGap" value="" step="1"></div></div>
+          <div class="dx-grid"><div class="dx-row"><label>Lc (µm)</label><input type="number" id="cLc" value="50.7" step="0.1"></div><div class="dx-row"><label>gap (nm)</label><input type="number" id="cGap" value="200" step="1"></div></div>
           <div class="dx-row"><label>Laser text</label><input type="text" id="cLaser" value="1550 nm laser"></div>
-          <div class="dx-grid"><div class="dx-row"><label>λ₁</label><input type="color" id="cC1" value="#e8705e"></div><div class="dx-row"><label>λ₂</label><input type="color" id="cC2" value="#7fc98e"></div><div class="dx-row"><label>λ₃</label><input type="color" id="cC3" value="#63b7e0"></div><div class="dx-row"><label>λ₄</label><input type="color" id="cC4" value="#d8cebe"></div></div>
+          <div class="dx-grid"><div class="dx-row"><label>λ₁</label><input type="color" id="cC1" value="#ff5a4e"></div><div class="dx-row"><label>λ₂</label><input type="color" id="cC2" value="#3fb6f2"></div><div class="dx-row"><label>λ₃</label><input type="color" id="cC3" value="#45d06e"></div><div class="dx-row"><label>λ₄</label><input type="color" id="cC4" value="#ffc23d"></div></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Monochrome (channels)</label><input type="checkbox" id="cMono"></div>
           </div></details>
           <details class="dx-sec"><summary>Show / hide</summary><div class="dx-inner">
           <div class="dx-row dx-toggle"><label style="margin:0">Laser source</label><input type="checkbox" id="cShowLaser" checked></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Ruler</label><input type="checkbox" id="cShowRuler" checked></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Tapers</label><input type="checkbox" id="cShowTaper" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Phase shifter φ</label><input type="checkbox" id="cShowPhase" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Phase shifter φ</label><input type="checkbox" id="cShowPhase"></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Delay labels</label><input type="checkbox" id="cShowDelay" checked></div>
           <div class="dx-row dx-toggle"><label style="margin:0">BDC labels</label><input type="checkbox" id="cShowBdc" checked></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Lc label</label><input type="checkbox" id="cShowLc" checked></div>
@@ -535,11 +535,11 @@
           <span class="param"><b>Platform</b> SOI 220 nm · ANT NanoSOI</span>
           <span class="param"><b>Waveguide</b> 500×220 nm</span>
           <span class="param"><b>Splitter</b> broadband directional coupler</span>
-          <span class="param"><b>ER</b> 42–51 dB (sim.)</span>
-          <span class="param"><b>IL</b> &lt; 1.5 dB (sim.)</span>
+          <span class="param"><b>ER</b> 23–35 dB (meas.)</span>
+          <span class="param"><b>IL</b> 1.5–3.3 dB (meas.)</span>
           <span class="param"><b>Channels</b> 1553 / 1555 / 1557 / 1559 nm</span>
         </div>
-        <a class="clink" style="margin-top:16px" href="https://github.com/VOTRE-PSEUDO/cwdm-demux-soi" target="_blank" rel="noopener">View repo →</a>
+        <a class="clink" style="margin-top:16px" href="https://github.com/riadh-ben-abbes/Riadh/tree/main/projects/cwdm-demux" target="_blank" rel="noopener">View repo →</a>
       </div>
       <div class="proj-card reveal">
         <div class="proj-kicker">Integrated photonics · design → fabrication → data analysis</div>
@@ -609,7 +609,7 @@
           <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 17v-7"/></svg>
           LinkedIn
         </a>
-        <a class="clink" href="https://github.com/your-username" target="_blank" rel="noopener">
+        <a class="clink" href="https://github.com/riadh-ben-abbes" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.9 2.6 5.9 2.9 5.9 2.9a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.5 9.3c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
           GitHub
         </a>
@@ -763,12 +763,13 @@
     $('cWl1').value=1553; $('cWl2').value=1555; $('cWl3').value=1557; $('cWl4').value=1559;
     setWl(1,'1553'); setWl(2,'1555'); setWl(3,'1557'); setWl(4,'1559');
     $('cDl').value=71.5; $('lgDl').textContent='71.5'; $('cDl2').value=143; $('lgDl2').textContent='143';
-    $('cLc').value=''; $('lgLc').textContent='n/a'; $('lblLc').textContent='Lc';
-    $('cGap').value=''; $('lgGap').textContent='n/a';
+    $('cLc').value='50.7'; $('lgLc').textContent='50.7 µm'; $('lblLc').textContent='Lc';
+    $('cGap').value='200'; $('lgGap').textContent='200 nm';
     $('cLaser').value='1550 nm laser'; $('lblLaser').textContent='1550 nm laser';
-    $('cC1').value='#e8705e'; $('cC2').value='#7fc98e'; $('cC3').value='#63b7e0'; $('cC4').value='#d8cebe';
+    $('cC1').value='#ff5a4e'; $('cC2').value='#3fb6f2'; $('cC3').value='#45d06e'; $('cC4').value='#ffc23d';
     $('cMono').checked=false;
     Object.keys(hideMap).forEach(id => $(id).checked=true);
+    $('cShowPhase').checked=false; circuit.classList.add('hide-phase');   // no phase shifter on this chip
   });
 </script>
 </body>
