@@ -18,15 +18,15 @@
     --safelight-hi:#AAB4FF;
     --waveguide:#FF6A55;
     --ink:#FFFFFF;
-    --ink-muted:#E6E6EE;
-    --ink-faint:#A3A3B8;
+    --ink-muted:#F5F5FA;
+    --ink-faint:#C4C4D4;
     --maxw:1120px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;background:var(--substrate);color:var(--ink);
-    font-family:"Manrope",system-ui,sans-serif;font-weight:400;
+    font-family:"Manrope",system-ui,sans-serif;font-weight:500;
     line-height:1.6;-webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
@@ -83,7 +83,7 @@
   .locus svg{width:13px;height:13px;stroke:var(--safelight);fill:none;stroke-width:1.6;}
 
   .circuit{margin-top:56px;position:relative;z-index:1;overflow-x:auto;
-    --dx-accent:#7B8BFF; --dx-txt:#E6E6EE; --dx-lw:1.6; --dx-fs:11px; --dx-font:"IBM Plex Mono",monospace;
+    --dx-accent:#7B8BFF; --dx-txt:#F5F5FA; --dx-lw:1.6; --dx-fs:11px; --dx-font:"IBM Plex Mono",monospace;
     --dx-bg:transparent; --dx-scale:1; --dx-glow:4px; --dx-weight:400;
     --c1:#FF5A4E; --c2:#3FB6F2; --c3:#45D06E; --c4:#FFC23D;
     --dx-flow-color:#AAB4FF; --dx-flow-w:2.4; --dx-flow-pulse:16; --dx-flow-period:256; --dx-flow-speed:2.8s;}
@@ -93,7 +93,7 @@
       filter:drop-shadow(0 0 var(--dx-glow,4px) var(--dx-accent,#7B8BFF));}
   .wg-dim{stroke:var(--dx-accent,#7B8BFF);opacity:.35;}
   .tick{stroke:var(--line);stroke-width:1;}
-  .lbl{font-family:var(--dx-font);font-size:var(--dx-fs,11px);fill:var(--dx-txt,#E6E6EE);font-weight:var(--dx-weight,400);}
+  .lbl{font-family:var(--dx-font);font-size:var(--dx-fs,11px);fill:var(--dx-txt,#F5F5FA);font-weight:var(--dx-weight,400);}
   .l-s{font-size:calc(var(--dx-fs,11px) * .8);}
   .lbl-hot{fill:var(--dx-accent,#7B8BFF);}
   .ch1{fill:var(--c1);} .ch2{fill:var(--c2);} .ch3{fill:var(--c3);} .ch4{fill:var(--c4);}
@@ -496,7 +496,7 @@
           <div class="dx-row"><label>Glow <span class="val" id="vGlow">4 px</span></label><input type="range" id="cGlow" min="0" max="14" step="1" value="4"></div>
           <div class="dx-row"><label>Overall size (zoom) <span class="val" id="vScale">100 %</span></label><input type="range" id="cScale" min="0.6" max="1.8" step="0.05" value="1"></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Bold text</label><input type="checkbox" id="cBold"></div>
-          <div class="dx-colors"><div class="dx-row"><label>Guides</label><input type="color" id="cAcc" value="#7b8bff"></div><div class="dx-row"><label>Text</label><input type="color" id="cTxt" value="#e6e6ee"></div></div>
+          <div class="dx-colors"><div class="dx-row"><label>Guides</label><input type="color" id="cAcc" value="#7b8bff"></div><div class="dx-row"><label>Text</label><input type="color" id="cTxt" value="#f5f5fa"></div></div>
           <div class="dx-row"><label>Font</label><select id="cFont"><option value="mono">IBM Plex Mono</option><option value="grotesk">Manrope</option><option value="serif">Serif</option></select></div>
           <div class="dx-row"><label>Line style</label><select id="cLine"><option value="solid">Solid</option><option value="dash">Dashed</option><option value="dot">Dotted</option></select></div>
           <div class="dx-row"><label>Background</label><select id="cBg"><option value="transparent">Transparent</option><option value="dark">Dark</option><option value="light">Light</option></select></div>
@@ -771,7 +771,7 @@
     $('cFs').value=11; $('vFs').textContent='11 px';
     $('cGlow').value=4; $('vGlow').textContent='4 px';
     $('cScale').value=1; $('vScale').textContent='100 %';
-    $('cBold').checked=false; $('cAcc').value='#7b8bff'; $('cTxt').value='#e6e6ee';
+    $('cBold').checked=false; $('cAcc').value='#7b8bff'; $('cTxt').value='#f5f5fa';
     $('cFont').value='mono'; $('cBg').value='transparent'; $('cLine').value='solid';
     $('cFlow').checked=true; $('cSpeed').value=7; $('vSpeed').textContent='7';
     $('cPulse').value=2.4; $('vPulse').textContent='2.4'; $('cDensity').value=4; $('vDensity').textContent='4'; $('cFlowCol').value='#aab4ff';
