@@ -104,6 +104,7 @@
   .circuit.hide-laser .source,.circuit.hide-laser .lbl-laser{display:none;}
   .circuit.hide-delay .lbl-delay{display:none;}
   .circuit.hide-bdc .lbl-bdc{display:none;}
+  .circuit .lbl tspan.ch1,.circuit .lbl tspan.ch2,.circuit .lbl tspan.ch3,.circuit .lbl tspan.ch4{font-size:1.45em;font-weight:700;}
   .circuit.hide-lc .lbl-lc,.circuit.hide-lc .lc-bracket{display:none;}
   .circuit.hide-ch .lbl-ch{display:none;}
   @media (prefers-reduced-motion:no-preference){
@@ -120,6 +121,7 @@
     stroke-dasharray:var(--dx-flow-pulse,16) 2000;
     filter:drop-shadow(0 0 5px var(--dx-flow-color,#7B8BFF));pointer-events:none;}
   .circuit.no-flow .flow-layer{display:none;}
+  .dx-open[hidden]{display:none;}
   .dx-open{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-size:.85rem;
     font-family:"Manrope",system-ui,sans-serif;color:var(--ink);background:var(--raised);
     border:1px solid var(--line);border-radius:8px;padding:9px 15px;cursor:pointer;transition:border-color .2s,background .2s;}
@@ -398,7 +400,7 @@
         <div class="proj-kicker">Integrated photonics · design → fabrication → measurement</div>
         <h3>1×4 CWDM MZI demultiplexer on SOI</h3>
         <p>Four-channel demultiplexer on SOI (220 nm): circuit design and simulation (Lumerical INTERCONNECT), GDS layout in KLayout / SiEPIC PDK, then fabrication (ANT NanoSOI MPW) and optical characterization. Cascaded-MZI architecture with broadband directional couplers.</p>
-        <div class="circuit reveal hide-phase" style="margin-top:22px">
+        <div class="circuit reveal hide-phase hide-lc" style="margin-top:22px">
       <div class="circuit-cap">
         <span class="eyebrow">1×4 CWDM demux · cascaded MZI · broadband directional couplers (bdc) · SOI</span>
         <span class="lbl mono" style="color:var(--ink-faint)">λ = <span id="capWl1">1553</span> / <span id="capWl2">1555</span> / <span id="capWl3">1557</span> / <span id="capWl4">1559</span> nm</span>
@@ -483,8 +485,8 @@
           <text class="lbl" x="1198" y="348"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wl" data-ch="1" fill="var(--dx-txt)">1553</tspan></text>
         </g>
       </svg>
-      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler · Lc = <span id="lgLc">50.7 µm</span> · gap = <span id="lgGap">200 nm</span> · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
-      <button class="dx-open" id="dxOpen" aria-haspopup="dialog">⚙ Customize schematic</button>
+      <p class="mono" style="margin:10px 0 0;font-size:.72rem;color:var(--ink-faint)">bdc = broadband directional coupler <span hidden>Lc = <span id="lgLc">50.7 µm</span></span> · gap = <span id="lgGap">200 nm</span> · taper = terminated port · ΔL = <span id="lgDl">71.5</span> µm · 2ΔL = <span id="lgDl2">143</span> µm</p>
+      <button class="dx-open" id="dxOpen" aria-haspopup="dialog" hidden>⚙ Customize schematic</button>
       <div class="dx-panel" id="dxPanel" role="dialog" aria-label="Customize the demux schematic">
         <div class="dx-bar"><h4><span class="dx-dot"></span>Customize schematic</h4><button class="dx-close" id="dxClose" aria-label="Close">×</button></div>
         <div class="dx-body">
@@ -521,7 +523,7 @@
           <div class="dx-row dx-toggle"><label style="margin:0">Phase shifter φ</label><input type="checkbox" id="cShowPhase"></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Delay labels</label><input type="checkbox" id="cShowDelay" checked></div>
           <div class="dx-row dx-toggle"><label style="margin:0">BDC labels</label><input type="checkbox" id="cShowBdc" checked></div>
-          <div class="dx-row dx-toggle"><label style="margin:0">Lc label</label><input type="checkbox" id="cShowLc" checked></div>
+          <div class="dx-row dx-toggle"><label style="margin:0">Lc label</label><input type="checkbox" id="cShowLc"></div>
           <div class="dx-row dx-toggle"><label style="margin:0">Channel labels</label><input type="checkbox" id="cShowCh" checked></div>
           </div></details>
           <details class="dx-sec"><summary>Export</summary><div class="dx-inner">
@@ -663,6 +665,8 @@
   const bgMap = { transparent:'transparent', dark:'#000000', light:'#ffffff' };
   const dashMap = { solid:'', dash:'7 5', dot:'1 5' };
 
+  // Owner-only tool: the button only appears when the page is opened with ?edit in the URL
+  if (new URLSearchParams(location.search).has('edit')) $('dxOpen').hidden = false;
   $('dxOpen').addEventListener('click', () => panel.classList.add('open'));
   $('dxClose').addEventListener('click', () => panel.classList.remove('open'));
 
@@ -781,6 +785,7 @@
     $('cMono').checked=false;
     Object.keys(hideMap).forEach(id => $(id).checked=true);
     $('cShowPhase').checked=false; circuit.classList.add('hide-phase');   // no phase shifter on this chip
+    $('cShowLc').checked=false; circuit.classList.add('hide-lc');
   });
 </script>
 </body>
