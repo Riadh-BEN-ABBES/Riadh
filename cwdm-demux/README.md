@@ -1,6 +1,6 @@
 # SOI 1×4 cascaded-MZI wavelength demultiplexer at 1550 nm
 
-We present a four-channel, silicon-photonic wavelength demultiplexer made using a two-stage cascade of Mach–Zehnder interferometers with broadband directional couplers, on a 2 nm channel grid from 1553 to 1559 nm. The fabricated device shows passbands with a 3-dB bandwidth of 1.6 to 1.8 nm, extinction ratios of 23 to 35 dB and a normalized insertion loss of 1.5 to 3.3 dB. It was fabricated through the Applied Nanotools NanoSOI MPW process on 500 × 220 nm strip waveguides and measured at UBC within the UBCx Phot1x course [5].
+We present a four-channel silicon photonic wavelength demultiplexer based on cascaded Mach–Zehnder interferometers with broadband directional couplers, operating on a 2 nm channel grid from 1553 to 1559 nm. Fabricated using 500 × 220 nm² strip waveguides, the device exhibits 3-dB bandwidths of 1.6–1.8 nm, extinction ratios of 23–35 dB, and normalized insertion losses of 1.5–3.3 dB at 1550 nm.
 
 <img src="figures/demux_animation.svg" width="100%" alt="Animated schematic of the 1x4 cascaded-MZI demultiplexer">
 
