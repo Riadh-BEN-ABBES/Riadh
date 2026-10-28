@@ -14,6 +14,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 FIG = ROOT / "figures"
+SIGNATURE = "© Riadh Ben Abbes 2026"
 
 PROFILES = {
     "paper": dict(w1=3.5, w2=7.16, font=8, small=6.5, lw=0.8, dpi=300,
@@ -71,6 +72,8 @@ def save(fig, stem, profile):
         _to_rgb(out / f"{stem}.png")
     else:
         FIG.mkdir(exist_ok=True)
+        fig.text(0.995, 0.005, SIGNATURE, ha="right", va="bottom",
+                 fontsize=0.75 * p["small"], color="0.55")
         fig.savefig(FIG / f"{stem}.png", dpi=p["dpi"], bbox_inches="tight")
         _to_rgb(FIG / f"{stem}.png")
     plt.close(fig)

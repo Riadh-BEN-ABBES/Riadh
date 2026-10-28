@@ -4,10 +4,11 @@
   .bg{fill:#0B0B12;}
   .tick{stroke:#26263A;stroke-width:1;}
   .wg{fill:none;stroke:#7B8BFF;stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(0 0 4px #7B8BFF);}
-  .lbl{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;fill:#B9B9C8;}
-  .l-s{font-size:8.8px;}
+  .lbl{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;fill:#FFFFFF;font-weight:600;}
+  .l-s{font-size:10.5px;}
   .lbl-hot{fill:#7B8BFF;}
-  .wlv{fill:#B9B9C8;}
+  .wlv{fill:#FFFFFF;}
+  .lbl tspan.ch1,.lbl tspan.ch2,.lbl tspan.ch3,.lbl tspan.ch4{font-size:1.6em;font-weight:800;}
   .ch1{fill:#FF5A4E;} .ch2{fill:#3FB6F2;} .ch3{fill:#45D06E;} .ch4{fill:#FFC23D;}
   .flow{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:16 2000;stroke-dashoffset:2016;}
   .f1{stroke:#FF5A4E;filter:drop-shadow(0 0 5px #FF5A4E);}
@@ -69,9 +70,6 @@
           <path fill="#70708A" d="M660,207 L660,217 L638,212 Z"/>
           <path fill="#70708A" d="M660,339 L660,349 L638,344 Z"/>
         </g>
-        <g class="lc-bracket" stroke="#70708A" stroke-width="1" fill="none">
-          <line x1="160" y1="216" x2="160" y2="224"/><line x1="220" y1="216" x2="220" y2="224"/><line x1="160" y1="220" x2="220" y2="220"/>
-        </g>
         <g class="flow-layer">
           <path class="flow o1 f3" d="M40,124 H120 C145,124 150,182 160,182 L220,198 C230,198 235,256 260,256 H460 C485,256 490,198 500,198 H560 C570,198 575,256 600,256 H660 C685,256 690,292 700,292 H760 C770,292 775,256 800,256 H1000 C1025,256 1030,292 1040,292 H1100 C1110,292 1115,256 1140,256 H1190"/>
           <path class="flow o2 f2" d="M40,124 H120 C145,124 150,182 160,182 H220 C230,182 235,124 260,124 H320 C335,124 344,98 360,98 C376,98 385,124 400,124 H460 C485,124 490,182 500,182 H560 C570,182 575,124 600,124 H660 C685,124 690,160 700,160 H760 C770,160 775,124 800,124 H865 C880,124 888,104 900,104 C912,104 920,124 935,124 H1000 C1025,124 1030,160 1040,160 H1100 C1110,160 1115,124 1140,124 H1190"/>
@@ -92,7 +90,6 @@
           <text class="lbl lbl-hot lbl-delay" x="884" y="336">ΔL</text>
           <text class="lbl l-s lbl-bdc" x="150" y="150" fill="#70708A">bdc</text>
           <text class="lbl l-s lbl-bdc" x="490" y="150" fill="#70708A">bdc</text>
-          <text id="lblLc" class="lbl l-s lbl-lc" x="190" y="238" text-anchor="middle" fill="#70708A">Lc</text>
           <text class="lbl lbl-ch" x="606" y="114"><tspan class="ch2">λ₂</tspan> <tspan class="ch4">λ₄</tspan></text>
           <text class="lbl lbl-ch" x="606" y="248"><tspan class="ch3">λ₃</tspan> <tspan class="ch1">λ₁</tspan></text>
           <text class="lbl" x="1198" y="128"><tspan class="ch2" style="font-weight:600">λ₂</tspan> <tspan class="wlv">1555</tspan></text>
@@ -101,4 +98,5 @@
           <text class="lbl" x="1198" y="348"><tspan class="ch1" style="font-weight:600">λ₁</tspan> <tspan class="wlv">1553</tspan></text>
         </g>
       
+<text x="1258" y="408" text-anchor="end" style="font-family:Manrope,system-ui,sans-serif;font-size:10px;fill:#70708A">© Riadh Ben Abbes 2026</text>
 </svg>

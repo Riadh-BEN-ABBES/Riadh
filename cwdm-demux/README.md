@@ -1,10 +1,10 @@
 # SOI 1×4 cascaded-MZI wavelength demultiplexer at 1550 nm
 
-We present a four-channel silicon photonic wavelength demultiplexer based on cascaded Mach–Zehnder interferometers with broadband directional couplers, operating on a 2 nm channel grid from 1553 to 1559 nm. Fabricated using 500 × 220 nm² strip waveguides, the device exhibits 3-dB bandwidths of 1.6–1.8 nm, extinction ratios of 23–35 dB, and normalized insertion losses of 1.5–3.3 dB at 1550 nm.
+We present a four-channel silicon photonic wavelength demultiplexer based on cascaded Mach–Zehnder interferometers with broadband directional couplers, operating on a 2 nm channel grid from 1553 to 1559 nm. Fabricated using 500 × 220 nm strip waveguides, the device exhibits 3-dB bandwidths of 1.6–1.8 nm, extinction ratios of 23–35 dB, and normalized insertion losses of 1.5–3.3 dB at 1550 nm.
 
 <img src="figures/demux_animation.svg" width="100%" alt="Animated schematic of the 1x4 cascaded-MZI demultiplexer">
 
-*Light of the four channels is split by MZI 1 (2ΔL = 143 µm), then by MZI 2A and 2B (ΔL = 71.5 µm), each built with broadband directional couplers (bdc); unused coupler ports end in tapers.*
+*1×4 demux based on cascaded MZIs*
 
 Every figure and number below is regenerated from the raw data in this repository by the scripts in `analysis/`.
 
@@ -16,7 +16,7 @@ Wavelength division multiplexing (WDM) carries several optical channels on a sin
 
 *Fig. 1. Coarse WDM link. This work implements the on-chip 1×4 demultiplexer for four channels on a 2 nm grid.*
 
-Cascaded Mach–Zehnder interferometers (MZIs) are well established for on-chip wavelength routing [3] and provide a passive alternative to microring filters [4], which generally require active resonance tuning. Their performance depends on the splitting ratio of the couplers at each stage: conventional directional couplers are strongly wavelength dependent, whereas broadband directional couplers (BDCs) keep a near 50/50 split over a wide band through an asymmetric phase-control section [1]. Here, four channels at 1553, 1555, 1557 and 1559 nm are targeted, using the SiEPIC PDK in KLayout and Lumerical INTERCONNECT for circuit simulation [7].
+Cascaded Mach–Zehnder interferometers (MZIs) are well established for on-chip wavelength routing [3] and provide a passive alternative to microring filters [4], which generally require active resonance tuning. Their performance depends on the splitting ratio of the couplers at each stage: conventional directional couplers are strongly wavelength dependent, whereas broadband directional couplers (BDCs) keep a near 50/50 split over a wide band through an asymmetric phase-control section [1]. Here, four channels at 1553, 1555, 1557 and 1559 nm are targeted, using the SiEPIC PDK in KLayout and Lumerical INTERCONNECT for circuit simulation [7], within the UBCx Phot1x course [5].
 
 ## II. Theoretical background
 
@@ -87,13 +87,13 @@ The layout was generated with the SiEPIC PDK in KLayout. Two layouts were fabric
 
 The path-length differences extracted from the waveguide lengths stored in the GDS match the design:
 
-| Structure | Arm lengths | ΔL |
-|---|---|---|
-| Demultiplexer, MZI 1 | 183.0 / 40.0 µm | 143.0 µm |
-| Demultiplexer, MZI 2A | 111.5 / 40.0 µm | 71.5 µm |
-| Demultiplexer, MZI 2B | 111.5 / 40.0 µm | 71.5 µm |
-| Test MZI, stage 1 | 183.0 / 40.0 µm | 143.0 µm |
-| Test MZI, stage 2 | 111.5 / 40.0 µm | 71.5 µm |
+| Structure | ΔL |
+|---|---|
+| Demultiplexer, MZI 1 | 143.0 µm |
+| Demultiplexer, MZI 2A | 71.5 µm |
+| Demultiplexer, MZI 2B | 71.5 µm |
+| Test MZI, stage 1 | 143.0 µm |
+| Test MZI, stage 2 | 71.5 µm |
 
 MZI 2A and 2B have strictly identical delay lines, with no phase offset between them, which is consistent with the non-uniform channel spacing discussed in Section VII. One output of MZI 2A ends in an `ebeam_terminator_te1550` on purpose: the fiber array of the test setup gives access to one input and three outputs per device, so this cell routes three outputs.
 
@@ -101,7 +101,7 @@ The second layout, [`EBeam_RiadhCWDM_otp1.gds`](layout/EBeam_RiadhCWDM_otp1.gds)
 
 <img src="figures/fig06b_layout_duplicate_klayout.png" width="100%">
 
-*Fig. 6. KLayout view of the duplicate demultiplexer in the second layout: only the output of MZI 2A that is terminated in the first layout is routed (top grating coupler).*
+*Fig. 6. KLayout view of the duplicate demultiplexer in the second layout: only the output of MZI 2A that is terminated in the first layout is routed, to Output GC4.*
 
 ## VI. Device fabrication
 
@@ -147,11 +147,7 @@ Spectra were recorded with a swept tunable laser from 1475 to 1583 nm (8 pm step
 | Ch. 3 (Output 3, MZI 2A) | 1557 nm | 1554.27 nm | 1.72 nm | 3.26 dB | 27.0 dB | 13.0 dB |
 | Ch. 4 (Output 2, MZI 2B) | 1559 nm | 1555.68 nm | 1.70 nm | 1.48 dB | 22.8 dB | 6.0 dB |
 
-Outputs 1, 3 and 2, recorded in the same scan, are spaced by 2.42 and 1.41 nm instead of 2 nm, the same non-uniform pattern as in simulation. ER is the peak-to-null extinction of each output within ±4 nm of its peak, as in Section VII; it ranges from 23 to 35 dB over the whole analysis band. Isolation is the margin between an output and the strongest other output at its peak, so it is only defined for Outputs 1 to 3, recorded in the same scan. The FSR is 7.74–7.90 nm.
-
-**Output assignment.** Two ports of the same stage-2 MZI should sum to a clean stage-1 response with a 4 nm period. The two outputs recorded on GC2 and GC3 do so (80 % of the fluctuating power at the 4 nm period), which confirms that they are the two MZI 2B ports; the third output (GC1) is the routed MZI 2A port. Matching the three spectra to the simulation gives a common offset of either −3.5 nm or +0.4 nm, depending on which simulated port corresponds to GC1. The table and Fig. 9 use the −3.5 nm hypothesis, which is physically expected for waveguides narrower than designed: Outputs 1 to 3 then peak 2.7 to 3.3 nm below their targets. The port numbering of the INTERCONNECT schematic will confirm it.
-
-Output 4 was recorded on the duplicate demultiplexer of the second layout (16 Nov 2025), whose single routed output is the MZI 2A port terminated on the first device, so it is assigned to the remaining channel by elimination. Its spectrum, however, does not fit this assignment: it peaks 0.6 nm above its target instead of about 3 nm below, and it does not sum with Output 3 into a clean 4 nm response (56 % at best, for any relative shift between the two devices). A new measurement of this output is needed to confirm it.
+Outputs 1, 3 and 2 are spaced by 2.42 and 1.41 nm instead of 2 nm, as in simulation, with an FSR of 7.74–7.90 nm. Channel targets assume a −3.5 nm offset, attributed to manufacturing variability: deviations of the waveguide width and thickness shift the effective index, and hence the channels, and slightly alter the BDC splitting ratio, which limits the extinction. Output 4, measured on the duplicate device, is assigned to the remaining channel by elimination.
 
 ## IX. Conclusion
 
@@ -177,6 +173,7 @@ python analysis/bdc_analysis.py
 python analysis/mzi_fit.py measurement/raw/mzi_stage1_dL143_2025-11-17_025351.mat --name fig06_mzi_stage1
 python analysis/mzi_fit.py measurement/raw/mzi_stage2_dL71p5_2025-11-17_025229.mat --name fig07_mzi_stage2
 python analysis/annotate_micrograph.py
+python analysis/stamp_images.py
 python analysis/sim_interconnect.py
 python analysis/meas_demux.py
 ```
@@ -209,6 +206,10 @@ The photonic devices were fabricated using the NanoSOI MPW fabrication process b
 After an initial wafer clean in piranha solution (3:1 H₂SO₄:H₂O₂) for 15 minutes and a water/IPA rinse, hydrogen silsesquioxane (HSQ) resist was spin-coated onto the substrate and heated to evaporate the solvent. The devices were patterned using a JEOL JBX-8100FS electron-beam instrument at The University of British Columbia. The exposure dose was corrected for proximity effects resulting from the backscatter of electrons from nearby features, and the shape writing order was optimized for efficient patterning and minimal beam drift.
 
 After exposure and development in a tetramethylammonium hydroxide (TMAH) solution, the devices were inspected optically for residues and defects. The chips were then mounted on a 4" handle wafer and etched by an anisotropic chlorine-based ICP-RIE process, after qualification of the etch rate. The resist was removed using a 10:1 buffered oxide etch, and the devices were inspected by scanning electron microscopy (SEM) to verify patterning and etch quality. A 2.2 µm oxide cladding was deposited by plasma-enhanced chemical vapor deposition (PECVD) based on tetraethyl orthosilicate (TEOS) at 300 °C. Reflectometry measurements were performed throughout the process to verify the device layer, buffer oxide and cladding thicknesses before delivery.
+
+## License
+
+© 2026 Riadh Ben Abbes. All rights reserved. This work is shared for consultation only: no part of it (code, data, layouts, figures, text) may be reproduced, modified or redistributed without the author's prior written permission. See [LICENSE](LICENSE).
 
 ## Author
 

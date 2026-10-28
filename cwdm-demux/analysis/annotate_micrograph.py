@@ -88,6 +88,8 @@ def main():
         ax.text(PITCH_X - 25, (y0 + y1) / 2, "127 µm", color=WHITE, fontsize=FS,
                 ha="right", va="center")
 
+    ax.text(x1 - 25, yb - 25, "© Riadh Ben Abbes 2026", color="white", alpha=0.8,
+            fontsize=FS - 1, ha="right", va="bottom")
     fig.subplots_adjust(0, 0, 1, 1)
     fig.savefig(OUT, dpi=250, pil_kwargs={"quality": 90})
 

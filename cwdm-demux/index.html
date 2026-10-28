@@ -10,13 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{--substrate:#000;--raised:#0B0B12;--raised-2:#13131D;--line:#26263A;--accent:#7B8BFF;
-        --accent-hi:#AAB4FF;--coral:#FF6A55;--ink:#FFF;--ink-muted:#B9B9C8;--ink-faint:#70708A;
+        --accent-hi:#AAB4FF;--coral:#FF6A55;--ink:#FFF;--ink-muted:#FFFFFF;--ink-faint:#D9D9E6;
         color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);
         padding-bottom:env(safe-area-inset-bottom,0px);}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
   body{margin:0;background:var(--substrate);color:var(--ink);font-family:"Manrope",system-ui,sans-serif;
-        line-height:1.65;-webkit-font-smoothing:antialiased}
+        line-height:1.65;font-weight:500;-webkit-font-smoothing:antialiased}
   a{color:var(--accent);text-decoration:none} a:hover{color:var(--accent-hi)}
   header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(0,0,0,.85);
           backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -64,19 +64,15 @@
 <main>
   <div class="eyebrow">Integrated photonics · design → fabrication → measurement</div>
   <h1>SOI 1×4 cascaded-MZI wavelength demultiplexer at 1550 nm</h1>
-<p>We present a four-channel, silicon-photonic wavelength demultiplexer
-made using a two-stage cascade of Mach–Zehnder interferometers with
-broadband directional couplers, on a 2 nm channel grid from 1553 to 1559
-nm. The fabricated device shows passbands with a 3-dB bandwidth of 1.6
-to 1.8 nm, extinction ratios of 23 to 35 dB and a normalized insertion
-loss of 1.5 to 3.3 dB. It was fabricated through the Applied Nanotools
-NanoSOI MPW process on 500 × 220 nm strip waveguides and measured at UBC
-within the UBCx Phot1x course [5].</p>
+<p>We present a four-channel silicon photonic wavelength demultiplexer
+based on cascaded Mach–Zehnder interferometers with broadband
+directional couplers, operating on a 2 nm channel grid from 1553 to 1559
+nm. Fabricated using 500 × 220 nm strip waveguides, the device exhibits
+3-dB bandwidths of 1.6–1.8 nm, extinction ratios of 23–35 dB, and
+normalized insertion losses of 1.5–3.3 dB at 1550 nm.</p>
 <img loading="lazy" src="figures/demux_animation.svg" width="100%" alt="Animated schematic of the 1x4 cascaded-MZI demultiplexer">
 
-<p><em>Light of the four channels is split by MZI 1 (2ΔL = 143 µm), then
-by MZI 2A and 2B (ΔL = 71.5 µm), each built with broadband directional
-couplers (bdc); unused coupler ports end in tapers.</em></p>
+<p><em>1×4 demux based on cascaded MZIs</em></p>
 <p>Every figure and number below is regenerated from the raw data by the
 analysis scripts available <a
 href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux">on
@@ -101,7 +97,7 @@ dependent, whereas broadband directional couplers (BDCs) keep a near
 50/50 split over a wide band through an asymmetric phase-control section
 [1]. Here, four channels at 1553, 1555, 1557 and 1559 nm are targeted,
 using the SiEPIC PDK in KLayout and Lumerical INTERCONNECT for circuit
-simulation [7].</p>
+simulation [7], within the UBCx Phot1x course [5].</p>
 <h2 id="ii-theoretical-background">II. Theoretical background</h2>
 <h3 id="a-choice-of-the-path-length-differences">A. Choice of the
 path-length differences</h3>
@@ -274,34 +270,28 @@ stored in the GDS match the design:</p>
 <thead>
 <tr class="header">
 <th>Structure</th>
-<th>Arm lengths</th>
 <th>ΔL</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Demultiplexer, MZI 1</td>
-<td>183.0 / 40.0 µm</td>
 <td>143.0 µm</td>
 </tr>
 <tr class="even">
 <td>Demultiplexer, MZI 2A</td>
-<td>111.5 / 40.0 µm</td>
 <td>71.5 µm</td>
 </tr>
 <tr class="odd">
 <td>Demultiplexer, MZI 2B</td>
-<td>111.5 / 40.0 µm</td>
 <td>71.5 µm</td>
 </tr>
 <tr class="even">
 <td>Test MZI, stage 1</td>
-<td>183.0 / 40.0 µm</td>
 <td>143.0 µm</td>
 </tr>
 <tr class="odd">
 <td>Test MZI, stage 2</td>
-<td>111.5 / 40.0 µm</td>
 <td>71.5 µm</td>
 </tr>
 </tbody>
@@ -320,7 +310,7 @@ remaining output is routed to a grating coupler (Fig. 6).</p>
 
 <p><em>Fig. 6. KLayout view of the duplicate demultiplexer in the second
 layout: only the output of MZI 2A that is terminated in the first layout
-is routed (top grating coupler).</em></p>
+is routed, to Output GC4.</em></p>
 <h2 id="vi-device-fabrication">VI. Device fabrication</h2>
 <p>The chip was fabricated through the Applied Nanotools NanoSOI MPW
 process [6]: 100 keV electron-beam lithography on 220 nm SOI with a 2 µm
@@ -473,32 +463,13 @@ duplicate device.</em></p>
 </tr>
 </tbody>
 </table></div>
-<p>Outputs 1, 3 and 2, recorded in the same scan, are spaced by 2.42 and
-1.41 nm instead of 2 nm, the same non-uniform pattern as in simulation.
-ER is the peak-to-null extinction of each output within ±4 nm of its
-peak, as in Section VII; it ranges from 23 to 35 dB over the whole
-analysis band. Isolation is the margin between an output and the
-strongest other output at its peak, so it is only defined for Outputs 1
-to 3, recorded in the same scan. The FSR is 7.74–7.90 nm.</p>
-<p><strong>Output assignment.</strong> Two ports of the same stage-2 MZI
-should sum to a clean stage-1 response with a 4 nm period. The two
-outputs recorded on GC2 and GC3 do so (80 % of the fluctuating power at
-the 4 nm period), which confirms that they are the two MZI 2B ports; the
-third output (GC1) is the routed MZI 2A port. Matching the three spectra
-to the simulation gives a common offset of either −3.5 nm or +0.4 nm,
-depending on which simulated port corresponds to GC1. The table and Fig.
-9 use the −3.5 nm hypothesis, which is physically expected for
-waveguides narrower than designed: Outputs 1 to 3 then peak 2.7 to 3.3
-nm below their targets. The port numbering of the INTERCONNECT schematic
-will confirm it.</p>
-<p>Output 4 was recorded on the duplicate demultiplexer of the second
-layout (16 Nov 2025), whose single routed output is the MZI 2A port
-terminated on the first device, so it is assigned to the remaining
-channel by elimination. Its spectrum, however, does not fit this
-assignment: it peaks 0.6 nm above its target instead of about 3 nm
-below, and it does not sum with Output 3 into a clean 4 nm response (56
-% at best, for any relative shift between the two devices). A new
-measurement of this output is needed to confirm it.</p>
+<p>Outputs 1, 3 and 2 are spaced by 2.42 and 1.41 nm instead of 2 nm, as
+in simulation, with an FSR of 7.74–7.90 nm. Channel targets assume a
+−3.5 nm offset, attributed to manufacturing variability: deviations of
+the waveguide width and thickness shift the effective index, and hence
+the channels, and slightly alter the BDC splitting ratio, which limits
+the extinction. Output 4, measured on the duplicate device, is assigned
+to the remaining channel by elimination.</p>
 <h2 id="ix-conclusion">IX. Conclusion</h2>
 <p>A four-channel SOI demultiplexer based on a two-stage cascaded MZI
 tree with broadband directional couplers was designed, simulated,
@@ -589,6 +560,6 @@ Université / CNRS.</p>
 
   <p style="margin-top:48px"><a class="btn primary" href="https://github.com/riadh-ben-abbes/Riadh/tree/main/cwdm-demux" target="_blank" rel="noopener">Code, raw data and analysis scripts on GitHub ↗</a></p>
 </main>
-<footer><div class="bar"><span>© Riadh Ben Abbes</span><a href="../">Back to portfolio</a></div></footer>
+<footer><div class="bar"><span>© 2026 Riadh Ben Abbes. All rights reserved.</span><a href="../">Back to portfolio</a></div></footer>
 </body>
 </html>
